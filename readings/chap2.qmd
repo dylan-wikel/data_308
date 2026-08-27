@@ -1,0 +1,21 @@
+---
+title: "chap2"
+subtitle: "Chapter 2: Behavioral Inhibition Dataset"
+date: "2026-08-27"
+author: "Dylan Wikel"
+lang: en
+format: 
+  html:
+    echo: false
+    message: false
+    warning: false
+    toc: true
+    toc-depth: 4
+    embed-resources: true
+---
+
+## 
+
+```{r}
+library(tidyverse)
+```

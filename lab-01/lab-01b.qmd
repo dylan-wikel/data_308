@@ -1,0 +1,94 @@
+---
+title: "DATA 308: Lab 1b"
+subtitle: "Working with data"
+date: "2026-08-27"
+author: "Dylan Wikel"
+lang: en
+format:
+  pdf:
+    pdf-standard: [a-2b, ua-2] # Configures PDF/A and PDF/UA-2 compliance
+    pdf-engine: lualatex       # LuaLaTeX is highly recommended for tagging support
+---
+
+When working in a Quarto document I recommend:
+
+- Start by rendering your document, so you know if there are any issues with the file.
+- Render periodically as you work and inspect your rendered file, so you know your document and code are behaving as desired.
+
+## Getting your data
+
+0. In the code chunk below load in the `tidyverse` package.
+
+```{r}
+library(tidyverse)
+```
+
+
+1. In the code chunk below read in your data and save it into an object called `game_films`.
+
+```{r}
+game_films <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-06-09/game_films.csv')
+```
+
+
+2. Use the `glimpse()` function to inspect your data. How many rows and columns are there? Note, I did not add a code chunk for you. You will first need to click the green "+C" button at the top right of this document to add a code chunk.
+
+There are `r ncol(game_films)` columns and `r nrow(game_films)` rows.
+```{r}
+glimpse(game_films)
+```
+
+
+## Explore your data
+
+3. Reproduce a plot from the lecture slides.
+```{r}
+ggplot(game_films, aes(y = worldwide_box_office_currency)) +
+  geom_bar()
+```
+
+
+4. Create a box plot using `geom_boxplot()` for a numerical variable of your choice.
+```{r}
+ggplot(game_films, aes(rotten_tomatoes)) +
+  geom_boxplot()
+```
+
+
+5. Create a box plot of `worldwide_box_office` by `worldwide_box_office_currency`. Hint: you can do this by specifying `worldwide_box_office_currency` for your y-axis.
+```{r}
+ggplot(game_films, aes(x = worldwide_box_office, y = worldwide_box_office_currency, color = worldwide_box_office_currency)) +
+  geom_boxplot()
+```
+
+
+6. Create a scatterplot for two numerical variables of your choosing, and add a smoothed curve.
+```{r}
+ggplot(game_films, aes(x = rotten_tomatoes, y = metacritic)) +
+  geom_point() +
+  geom_smooth(color = "purple") +
+  coord_cartesian(xlim = c(0,100), ylim = c(0,100)) +
+  labs(x = "Rotten Tomatoes Score",
+       y = "Metacritic Score")
+```
+
+
+7. Calculate the minimum, maximum, 25\% quantile, and 75\% quantile of `rotten_tomatoes` scores.
+```{r}
+game_films |> 
+  summarise(
+    min_rt = min(rotten_tomatoes, na.rm = TRUE),
+    max_rt = max(rotten_tomatoes, na.rm = TRUE),
+    q1_rt = quantile(rotten_tomatoes, 0.25, na.rm = TRUE),
+    q3_rt = quantile(rotten_tomatoes, 0.75, na.rm = TRUE)
+  )
+```
+
+
+## Version control
+
+I do recommend using GitHub for this class, but I will not require for homework assignments, just the final project.
+I recommend you practice by using a single GitHub repository for your labs and homework assignments for this class.
+
+Here are [instructions I created for installing and configuring GitHub and RStudio]( https://csuci-data-200-f26.github.io/lecture-materials/week-00/software-setup). (Skip step 4)
+

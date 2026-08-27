@@ -1,0 +1,164 @@
+---
+title: "DATA 208: Lab 1a"
+subtitle: "Familiarizing yourself with a Quarto document"
+date: "2026-08-25"
+author: "Dylan Wikel"
+lang: en
+format: 
+  html:
+    echo: false
+    message: false
+    warning: false
+    toc: true
+    toc-depth: 4
+    embed-resources: true
+---
+
+```{r}
+library(tidyverse)
+```
+
+Start off this lab by clicking the "Render" (the blue arrow) at the top. This will produce an html report, where you can view the plots and questions. The .qmd file is a Quarto document, this document is where you will make changes, render, and then see those changes reflected in the html report it procudes.
+
+
+In this lab we will be exploring California unemployment rates.
+This data is available on the [CA Open Data Portal](https://data.ca.gov/dataset/unemployment-rate-by-age-groups).
+
+We will begin by reading in this data and saving it into an **object** called `unemployment`.
+
+```{r}
+unemployment <- read_csv("http://csuci-data308-fa26.github.io/course-materials/week-01/data/unemployment_rate_by_age_groups.csv")
+```
+
+We can view what is in the `employment` object by printing it.
+
+```{r}
+unemployment
+```
+
+You can skip over the following code chunk, I needed to do some data cleaning and wrangling to get it in a good format for plotting.
+
+```{r}
+unemployment_new <- unemployment |>
+  mutate(new_date = as_date(Date, format = "%m/%d/%Y")) |> 
+  pivot_longer(
+    cols = starts_with("Age "),
+    names_to = "age_group",
+    names_prefix = "Age ",
+    values_to = "unemployment_rate"
+  )
+```
+
+
+## Unemployment over time
+
+```{r}
+unemployment_new |> 
+  filter(age_group == "25-34") |> 
+  ggplot(aes(x = new_date, y = unemployment_rate)) +
+  geom_point() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(
+    x = "Date",
+    y = "Unemployment rate \n for individuals ages 25-34"
+  )
+```
+
+## Question 1
+
+If you were to describe these trends to someone what would you say?
+
+### Response
+
+Unemployment rates for individuals in the 25-34 age range were fairly low
+in the year 2008, increased and peaked around 2012, and dropped considerably
+near 2020, with a marked rise and fall between 2020 and present time.
+
+## Question 2
+
+What is a "typical" unemployment rate? What would be an unusual rate?
+
+### Response
+
+A typical unemployment rate would be roughly 5% and an unusual unemployment
+rate would be 10-12%.
+
+## Unemployment trends for each age group
+
+```{r}
+ggplot(
+  unemployment_new, 
+  aes(x = new_date, y = unemployment_rate, color = age_group, linetype = age_group)
+) +
+  geom_line() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(
+    x = "Date",
+    y = "Unemployment rate",
+    color = "Age group",
+    linetype = "Age group"
+  )
+```
+
+## Question 3
+
+Given this data, what would you predict the average unemployment rate of 2027 to be for people aged 25-34? Why?
+
+### Response
+
+I would expect the average unemployment rate for people aged 25-34 in 2027 to 
+be around 5% because there was less variability or fluctuation in the couple of
+years prior. Because it was hovering around 5% already, I'd expect little change.
+
+## Question 4
+
+Given this data, what would you predict the average unemployment rate of 2035 to be for people aged 55-64? Why?
+
+### Response
+
+I think that it would be unwise to predict an unemployment rate 10 years beyond
+our dataset based on a visual alone. Based on previous data, drastic increases
+and decreases in unemployment rates for all groups can occur in short timespans.
+But, I would predict that this age group would see lower overall increases and
+decreases when compared to other groups as the higher age groups unemployment
+rates appear more stable than those in lower age groups.
+
+
+## Question 5
+
+Which age group(s) had the highest unemployment rate in general?
+
+### Response
+
+Age groups 16-19.
+
+## Question 6
+
+Which age group(s) had the lowest unemployment rate in general?
+
+### Response
+
+People in the groups aged 45-54, 55-64, and 65+ have the lowest unemployment 
+rates.
+
+## Question 7
+
+Would you say there is a meaningful difference in unemployment rates between 55-64 year olds and 20-24 year olds? Why?
+
+### Response
+
+Yes, as it appears that the unemployment rate for 20-24 year olds is roughly
+1.5x-2.0x the rate of 55-64 year olds across the graph.
+
+## Question 8
+
+Would you say there is a meaningful difference in unemployment rates between 55-64 year olds and 35-34 year olds? Why?
+
+### Response
+
+No, it appears to only differ between 1-3% between these groups across the graph.
+
+
+When you are done, click "Render" (the blue arrow) at the top. Submit the rendered html report to CI Learn.

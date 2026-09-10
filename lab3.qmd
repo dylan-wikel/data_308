@@ -18,5 +18,6 @@ sample_proportions
 
 ```{r}
 ggplot(sample_proportions, aes(x = values)) +
-  geom_bar()
+  geom_bar() +
+  geom_vline(xintercept = .58)
 ```

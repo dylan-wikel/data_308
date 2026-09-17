@@ -35,7 +35,8 @@ Type ?bikes into the Console to view the data documentation. What is the descrip
 
 ### Response
 
-[Replace this text and the brackets with your response.]
+`rides` refers to the number of bikeshare rides and `temp_actual` refers to raw
+temperature measured in degrees Fahrenheit.
 
 ## Question 2
 
@@ -43,10 +44,15 @@ We want to explore if we can use the temperature to predict the number of daily 
 
 ### Response
 
-[Add your response to the R chunk below.]
-
 ```{r}
-
+ggplot(bikes, 
+       aes(x = rides, y = temp_actual)) + 
+  geom_point() +
+  labs(
+    x = "Number of Bikeshare Rides",
+    y = "Temperature in Degrees Fahrenheit",
+    title = "The Relationship Between Number of Bikeshare Rides and Temperature"
+  )
 ```
 
 
@@ -57,9 +63,20 @@ Reproduce your plot from question 2, but now add a linear regression line to the
 ### Response
 
 ```{r}
-
+ggplot(bikes, 
+       aes(x = rides, y = temp_actual)) + 
+  geom_point() +
+  geom_smooth(method = lm,
+              color = "purple") +
+  labs(
+    x = "Number of Bikeshare Rides",
+    y = "Temperature in Degrees Fahrenheit",
+    title = "The Relationship Between Number of Bikeshare Rides and Temperature"
+  )
 ```
-
+The regression line models the data fairly well. I can see that there is a positive
+relationship between `temp_actual` and `rides` such that as `temp_actual` increases,
+`rides` also increases.
 
 ## Question 4
 
@@ -68,6 +85,12 @@ Note, I did not provide a code chunk for you to use for this question. You will 
 
 ### Response
 
+```{r}
+bike_model <- lm(rides ~ temp_actual, data = bikes)
+
+summary(bike_model)
+```
+
 
 ## Question 5
 
@@ -75,6 +98,7 @@ Specify the fitted model in context.
 
 ### Response
 
+$$\hat Y{Rides_i} = -2168.77 + 89.23(Temperature_i)$$
 
 ## Question 6
 
@@ -82,6 +106,10 @@ Interpret the estimate for the y-intercept in context. Does it have a meaningful
 
 ### Response
 
+The expected number of `ride` when `temp_actual` is equal to 0 is -2168.77 `ride`s.
+This does not have meaningful interpretation in context as there are no recorded
+values in `temp_actual` equal to 0 and we would not expect a negative number of rides
+as it is impossible.
 
 ## Question 7
 
@@ -89,12 +117,24 @@ Interpret the estimate for the slope in context.
 
 ### Response
 
+The slope in this context is 89.23. For each unit increase in `temp_actual`, we expect
+an increase in `ride` by 89.23.
 
 ## Question 8
 
 Identify the 95% confidence interval for the slope and its corresponding margin of error.
 
 ### Response
+
+```{r}
+ci_bike <- confint(bike_model)["temp_actual", ]
+
+# margin of error
+bike_me <- (ci_bike[2] - ci_bike[1]) / 2 
+
+ci_bike
+bike_me
+```
 
 
 ## Question 9
@@ -103,12 +143,20 @@ Improve your interpretation from question 7 here by adding the margin of error a
 
 ### Response
 
+A 1 degree increase in `temp_actual` is associated with an increase in bikeshare
+`ride`s of 89.23 plus or minus 11.13949 rides with 95% confidence.
 
 ## Question 10
 
 What daily number of rides would our model predict for a day where the temperature is 70 degrees Fahrenheit?
 
 ### Response
+
+```{r}
+temp_data <- data.frame(temp_actual = 70)
+
+predict(bike_model, newdata = temp_data, interval = "confidence")
+```
 
 
 ## Question 11
@@ -158,6 +206,7 @@ What daily number of rides would our model predict for a day where the temperatu
 What is extrapolation and why is it dangerous?
 
 ### Response
+
 
 
 # Homework Help

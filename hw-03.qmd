@@ -156,6 +156,7 @@ What daily number of rides would our model predict for a day where the temperatu
 temp_data <- data.frame(temp_actual = 70)
 
 predict(bike_model, newdata = temp_data, interval = "confidence")
+predict(bike_model, newdata = temp_data, interval = "prediction")
 ```
 
 
@@ -165,6 +166,8 @@ Identify the 95% interval for your prediction in question 10 and its correspondi
 
 ### Response
 
+For a 70 degree day, we expect 4077.598 bikeshare rides, between 3942.193 and 
+4213.004 rides, with 95% confidence. 
 
 ## Question 12
 
@@ -172,6 +175,8 @@ Provide an interpretation of your prediction and interval from questions 10 and 
 
 ### Response
 
+For a 70 degree day, we predict 4077.598 bikeshare rides, between 1543.132 and 
+6612.065 rides, with 95% confidence.
 
 ## Question 13
 

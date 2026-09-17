@@ -1,0 +1,172 @@
+---
+title: "DATA 308: Homework 3"
+subtitle: "Simple linear regression"
+author: "Dylan Wikel"
+format: 
+  html:
+    echo: true
+    message: false
+    warning: false
+    toc: true
+    toc-depth: 4
+    embed-resources: true
+---
+
+*Please change the author name to your own. Answer in complete sentences.*
+
+# Bike share data
+
+We have data on bike ridership among registered members of the Capital Bikeshare service in Washington, D.C. rentals by weather.
+
+## Question 0
+
+Begin by running the code chunk below to load the `tidyverse` package and the `bikes` data from the `bayesrules` package. You may need to first install the packages using `install.packages(c("tidyverse", "bayesrules"))`  in the Console.
+
+```{r}
+library(tidyverse)
+library(bayesrules)
+
+data("bikes")
+```
+
+## Question 1
+
+Type ?bikes into the Console to view the data documentation. What is the description of the variables called `rides` and `temp_actual`?
+
+### Response
+
+[Replace this text and the brackets with your response.]
+
+## Question 2
+
+We want to explore if we can use the temperature to predict the number of daily bikeshare rides we will get. Produce a plot to visualize the relationship between `rides` and `temp_actual`. Make sure to provide axes labels instead of just using the default labels. (Hint: Look at slide 10 of lecture 4a.)
+
+### Response
+
+[Add your response to the R chunk below.]
+
+```{r}
+
+```
+
+
+## Question 3
+
+Reproduce your plot from question 2, but now add a linear regression line to the plot. Does it appear to model your data well?
+
+### Response
+
+```{r}
+
+```
+
+
+## Question 4
+
+Fit a linear model to regress `rides` on `temp_actual`, saving your model as `bike_model`. 
+Note, I did not provide a code chunk for you to use for this question. You will have to click the "+C" button at the top of this document to add an R code chunk.
+
+### Response
+
+
+## Question 5
+
+Specify the fitted model in context.
+
+### Response
+
+
+## Question 6
+
+Interpret the estimate for the y-intercept in context. Does it have a meaningful interpretation in this context?
+
+### Response
+
+
+## Question 7
+
+Interpret the estimate for the slope in context.
+
+### Response
+
+
+## Question 8
+
+Identify the 95% confidence interval for the slope and its corresponding margin of error.
+
+### Response
+
+
+## Question 9
+
+Improve your interpretation from question 7 here by adding the margin of error and confidence level into your interpretation.
+
+### Response
+
+
+## Question 10
+
+What daily number of rides would our model predict for a day where the temperature is 70 degrees Fahrenheit?
+
+### Response
+
+
+## Question 11
+
+Identify the 95% interval for your prediction in question 10 and its corresponding margin of error.
+
+### Response
+
+
+## Question 12
+
+Provide an interpretation of your prediction and interval from questions 10 and 11 in context, including your margin of error and confidence level into your interpretation.
+
+### Response
+
+
+## Question 13
+
+What is the average daily number of rides would our model predict for days where the temperature is 70 degrees Fahrenheit?
+
+### Response
+
+
+## Question 14
+
+Identify the 95% interval for your prediction in question 13 and its corresponding margin of error.
+
+### Response
+
+
+## Question 15
+
+Provide an interpretation of your prediction and interval from questions 13 and 14 in context, including your margin of error and confidence level into your interpretation.
+
+### Response
+
+
+## Question 16
+
+What daily number of rides would our model predict for a day where the temperature is 20 degrees Fahrenheit?
+
+### Response
+
+
+## Question 17
+
+What is extrapolation and why is it dangerous?
+
+### Response
+
+
+# Homework Help
+
+Have you done the homework by yourself, with a peer(s), or used tools like ChatGPT? 
+
+- If you provided help to a peer(s) and/or got help from your peers(s) please explain briefly what this entailed. 
+- If you used tools like ChatGPT, include the prompts you used and explain how the tool helped supported your learning.
+
+## Response
+
+

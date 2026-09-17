@@ -36,3 +36,7 @@ afford = (price<=50) # true when price is less than or equal to 50, false otherw
 sum(afford) / N
 
 ```
+
+```{r}
+
+```

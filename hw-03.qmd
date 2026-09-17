@@ -46,7 +46,9 @@ We want to explore if we can use the temperature to predict the number of daily 
 
 ```{r}
 ggplot(bikes, 
-       aes(x = rides, y = temp_actual)) + 
+       aes(x = rides,
+           y = temp_actual)
+       ) + 
   geom_point() +
   labs(
     x = "Number of Bikeshare Rides",
@@ -64,10 +66,13 @@ Reproduce your plot from question 2, but now add a linear regression line to the
 
 ```{r}
 ggplot(bikes, 
-       aes(x = rides, y = temp_actual)) + 
+       aes(x = rides,
+           y = temp_actual)
+       ) + 
   geom_point() +
   geom_smooth(method = lm,
-              color = "purple") +
+              color = "purple"
+              ) +
   labs(
     x = "Number of Bikeshare Rides",
     y = "Temperature in Degrees Fahrenheit",

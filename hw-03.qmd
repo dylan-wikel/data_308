@@ -46,13 +46,13 @@ We want to explore if we can use the temperature to predict the number of daily 
 
 ```{r}
 ggplot(bikes, 
-       aes(x = rides,
-           y = temp_actual)
+       aes(x = temp_actual,
+           y = rides)
        ) + 
   geom_point() +
   labs(
-    x = "Number of Bikeshare Rides",
-    y = "Temperature in Degrees Fahrenheit",
+    x = "Temperature in Degrees Fahrenheit",
+    y = "Number of Bikeshare Rides",
     title = "The Relationship Between Number of Bikeshare Rides and Temperature"
   )
 ```
@@ -66,16 +66,16 @@ Reproduce your plot from question 2, but now add a linear regression line to the
 
 ```{r}
 ggplot(bikes, 
-       aes(x = rides,
-           y = temp_actual)
+       aes(x = temp_actual,
+           y = rides)
        ) + 
   geom_point() +
   geom_smooth(method = lm,
-              color = "purple"
-              ) +
+            color = "purple"
+            ) +
   labs(
-    x = "Number of Bikeshare Rides",
-    y = "Temperature in Degrees Fahrenheit",
+    x = "Temperature in Degrees Fahrenheit",
+    y = "Number of Bikeshare Rides",
     title = "The Relationship Between Number of Bikeshare Rides and Temperature"
   )
 ```
@@ -111,7 +111,7 @@ Interpret the estimate for the y-intercept in context. Does it have a meaningful
 
 ### Response
 
-The expected number of `ride` when `temp_actual` is equal to 0 is -2168.77 `ride`s.
+The expected number of `ride` when `temp_actual` is equal to 0 is -2168.77 `ride`.
 This does not have meaningful interpretation in context as there are no recorded
 values in `temp_actual` equal to 0 and we would not expect a negative number of rides
 as it is impossible.
@@ -189,12 +189,23 @@ What is the average daily number of rides would our model predict for days where
 
 ### Response
 
+```{r}
+temp_data <- data.frame(temp_actual = 70)
+
+p_model <- predict(bike_model, newdata = temp_data, interval = "prediction")
+p_model
+```
+
 
 ## Question 14
 
 Identify the 95% interval for your prediction in question 13 and its corresponding margin of error.
 
 ### Response
+
+```{r}
+(p_model[3] - p_model[2]) / 2
+```
 
 
 ## Question 15
@@ -203,13 +214,20 @@ Provide an interpretation of your prediction and interval from questions 13 and 
 
 ### Response
 
+For a 70 degree day, we predict 4077.598 bikeshare rides, between 1543.132 and 
+6612.065 rides, with 95% confidence.
 
 ## Question 16
 
 What daily number of rides would our model predict for a day where the temperature is 20 degrees Fahrenheit?
 
 ### Response
+```{r}
+temp_extrap <- data.frame(temp_actual = 20)
 
+extrap_model <- predict(bike_model, newdata = temp_extrap, interval = "confidence")
+extrap_model
+```
 
 ## Question 17
 
@@ -217,7 +235,10 @@ What is extrapolation and why is it dangerous?
 
 ### Response
 
-
+Extrapolation is when you try to make predictions that use values that are
+outside of your collected data. In the above example where `temp_actual` is 20,
+we observe that there would be an expected number of bikeshare rentals that is
+negative, and thus, impossible. 
 
 # Homework Help
 
@@ -228,4 +249,8 @@ Have you done the homework by yourself, with a peer(s), or used tools like ChatG
 
 ## Response
 
-
+I just worked with Morgan, Blake, and Erik. We all just talked about how to
+set things up, but nothing very specific. Blake and I talked about how you
+might answer the prediction interval questions. Morgan and I went over each
+other's rendered qmd's before submitting and also talked about prediction
+interval stuff.

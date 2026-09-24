@@ -118,6 +118,12 @@ We should not just report a p-value on its own, we should also provide context. 
 
 ### Response
 
+```{r}
+aid_ci <- confint(aid_model)
+
+aid_ci
+```
+
 
 ## Question 9
 
@@ -130,7 +136,10 @@ We found strong evidence of a linear relationship between `gift_aid` and
 
 
 A decrease of (\$40) on average in average `gift_aid` is associated
-with an increase of `family_income` of \$1,000.
+with an increase of `family_income` of \$1,000, with a margin of error of \$21.7 
+with 95% confidence. 
+
+between -0.06480555 -0.02133775
 
 ## Final note
 

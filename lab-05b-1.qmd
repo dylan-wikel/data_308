@@ -1,0 +1,97 @@
+---
+title: "DATA 308: Lab 5b"
+subtitle: "Hypothesis Testing with SLR"
+author: "Your name here"
+format: pdf
+execute: 
+  message: false
+  warning: false
+---
+
+Our research question that we will investigate in this lab is:
+
+> Among first-year Elmhurst College students represented by these data, is family income linearly associated with mean gift aid received?
+
+```{r}
+library(openintro)
+library(tidyverse)
+data("elmhurst")
+```
+
+## Question 1
+
+Take a look at the elmhurst dataset and familiarize yourself with it. 
+You can run the code chunk below to view help documentation for this dataset and the structure.
+I have the `eval` argument chunk set to false, meaning when you render this document the code chunk will not be run.
+
+```{r}
+#| eval: false
+
+?elmhurst
+glimpse(elmhurst)
+```
+
+## Question 2
+
+Produce a plot to visualize the relationship between gift aid and family income. Make sure to plot the response variable on the y-axis and include a regression line.
+
+### Response
+
+[Replace this with you response.]
+
+
+## Question 3
+
+We will learn about the conditions for linear regression next week, but for now just visually assess, does a line appear to be a good model?
+
+### Response
+
+
+## Question 4
+
+Below is the population simple linear regression model, in a general form written with LaTex. Replace the $Y$ and $X$ in the equation with the response and explanatory variables for this context.
+
+### Response
+
+$$Y = \beta_0 + \beta_1 + X + \epsilon$$
+
+## Question 5
+
+State the null and alternative hypotheses, in symbols and in words, to test our research question stated at the top of this document.
+
+### Response
+
+
+## Question 6
+
+Fit a simple linear regression model.
+
+### Response
+
+
+## Question 7
+
+What is the p-value for this hypothesis test? With a significance level of 0.05, what is your statistical decision?
+
+### Response
+
+
+## Question 8
+
+We should not just report a p-value on its own, we should also provide context. Compute a confidence interval for $\beta_1$.
+
+### Response
+
+
+## Question 9
+
+Provide your conclusion in context for this hypothesis test. One sentence should explain the results of your hypothesis test, with p-value reported in parentheses. The next sentence should provide your estimate and confidence interval interpreted in context (you can choose to report it as an interval or as an margin of error).
+
+### Response
+
+
+## Final note
+
+A condition on our conclusion:
+
+> Our hypothesis test is valid only if certain conditions about the data and regression model are satisfied. Next week, we will learn how to identify these conditions and use diagnostic plots to assess them. For now, our conclusion assumes that the required conditions hold.

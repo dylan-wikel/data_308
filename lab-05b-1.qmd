@@ -108,8 +108,9 @@ p_value
 $$p = 0.0002289$$
 
 $$p < 0.05$$
-With a `r round(p_value, 5)` we can infer that `family_income` is a significant 
-predictor of `gift_aid`.
+With a $p$ = `r round(p_value, 5)` we can infer that `family_income` is a 
+significant predictor of `gift_aid`, ($p$ = `r round(p_value, 5)`, 
+reject $H_0 = 0$).
 
 ## Question 8
 
@@ -124,6 +125,12 @@ Provide your conclusion in context for this hypothesis test. One sentence should
 
 ### Response
 
+We found strong evidence of a linear relationship between `gift_aid` and 
+`family_income`, `r round(p_value, 5)` 
+
+
+A decrease of (\$40) on average in average `gift_aid` is associated
+with an increase of `family_income` of \$1,000.
 
 ## Final note
 

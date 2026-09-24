@@ -1,7 +1,7 @@
 ---
 title: "DATA 308: Lab 5b"
 subtitle: "Hypothesis Testing with SLR"
-author: "Your name here"
+author: "Dylan Wikel"
 format: pdf
 execute: 
   message: false
@@ -14,6 +14,7 @@ Our research question that we will investigate in this lab is:
 
 ```{r}
 library(openintro)
+library(broom)
 library(tidyverse)
 data("elmhurst")
 ```
@@ -37,7 +38,11 @@ Produce a plot to visualize the relationship between gift aid and family income.
 
 ### Response
 
-[Replace this with you response.]
+```{r}
+ggplot(elmhurst, aes(x = family_income, y = gift_aid)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "green")
+```
 
 
 ## Question 3
@@ -46,6 +51,8 @@ We will learn about the conditions for linear regression next week, but for now 
 
 ### Response
 
+It doesn't appear to be a particularly good model, but it is reasonable to say
+that there's a negative relationship that is somewhat linear. Loosely.
 
 ## Question 4
 
@@ -53,7 +60,7 @@ Below is the population simple linear regression model, in a general form writte
 
 ### Response
 
-$$Y = \beta_0 + \beta_1 + X + \epsilon$$
+$$\text{Gift Aid Received} = \beta_0 + \beta_1(\text{Family Income}) + \epsilon$$
 
 ## Question 5
 
@@ -61,12 +68,26 @@ State the null and alternative hypotheses, in symbols and in words, to test our 
 
 ### Response
 
+There is no linear association between family income and the amount of gift aid
+a student receives.
+$$H_0 = \beta_1 = 0$$
+
+There is a linear association between family income and the amount of gift aid
+a student receives.
+$$H_a = \beta_1 \ne 0 $$
 
 ## Question 6
 
 Fit a simple linear regression model.
 
 ### Response
+
+```{r}
+aid_model <- lm(gift_aid ~ family_income, data = elmhurst)
+tidy_model <- tidy(aid_model)
+
+summary(aid_model)
+```
 
 
 ## Question 7
@@ -75,6 +96,20 @@ What is the p-value for this hypothesis test? With a significance level of 0.05,
 
 ### Response
 
+```{r}
+p_value <- tidy_model |>
+  filter(term == "family_income") |>
+  select(p.value)
+
+p_value
+```
+
+
+$$p = 0.0002289$$
+
+$$p < 0.05$$
+With a `r round(p_value, 5)` we can infer that `family_income` is a significant 
+predictor of `gift_aid`.
 
 ## Question 8
 

@@ -57,7 +57,7 @@ We will learn about the conditions for linear regression next week, but for now 
 ### Response
 
 It doesn't appear to be a particularly good model, but it does seem to inform us
-that there's a weak and negative relationship between the `family_income` and
+that there's a weak and negative relationship between `family_income` and
 `gift_aid`.
 
 ## Question 4
@@ -114,8 +114,8 @@ p_value
 $$p = 0.0002289$$
 
 $$p < 0.05$$
-With a $p$ = `r round(p_value, 5)` that is less than our significance level, so 
-we can reject $H_0 = 0$).
+Our p-value ($p$ = `r round(p_value, 5)`) is less than our significance level, so 
+we can reject the null hypothesis ($H_0 = 0$).
 
 ## Question 8
 

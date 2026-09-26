@@ -41,7 +41,12 @@ Produce a plot to visualize the relationship between gift aid and family income.
 ```{r}
 ggplot(elmhurst, aes(x = family_income, y = gift_aid)) +
   geom_point() +
-  geom_smooth(method = "lm", color = "green")
+  geom_smooth(method = "lm", color = "green") +
+  labs(
+    x = "Family Income in Thousands",
+    y = "Gift Aid in Thousands",
+    title = "The Relationship Between Family Income and Gift Aid"
+  )
 ```
 
 
@@ -51,8 +56,9 @@ We will learn about the conditions for linear regression next week, but for now 
 
 ### Response
 
-It doesn't appear to be a particularly good model, but it is reasonable to say
-that there's a negative relationship that is somewhat linear. Loosely.
+It doesn't appear to be a particularly good model, but it does seem to inform us
+that there's a weak and negative relationship between the `family_income` and
+`gift_aid`.
 
 ## Question 4
 
@@ -69,11 +75,11 @@ State the null and alternative hypotheses, in symbols and in words, to test our 
 ### Response
 
 There is no linear association between family income and the amount of gift aid
-a student receives.
+a student receives at Elmhurst college in 2011.
 $$H_0 = \beta_1 = 0$$
 
 There is a linear association between family income and the amount of gift aid
-a student receives.
+a student receives at Elmhurst college in 2011.
 $$H_a = \beta_1 \ne 0 $$
 
 ## Question 6
@@ -108,9 +114,8 @@ p_value
 $$p = 0.0002289$$
 
 $$p < 0.05$$
-With a $p$ = `r round(p_value, 5)` we can infer that `family_income` is a 
-significant predictor of `gift_aid`, ($p$ = `r round(p_value, 5)`, 
-reject $H_0 = 0$).
+With a $p$ = `r round(p_value, 5)` that is less than our significance level, so 
+we can reject $H_0 = 0$).
 
 ## Question 8
 
@@ -131,15 +136,11 @@ Provide your conclusion in context for this hypothesis test. One sentence should
 
 ### Response
 
-We found strong evidence of a linear relationship between `gift_aid` and 
-`family_income`, `r round(p_value, 5)` 
-
-
-A decrease of (\$40) on average in average `gift_aid` is associated
-with an increase of `family_income` of \$1,000, with a margin of error of \$21.7 
-with 95% confidence. 
-
-between -0.06480555 -0.02133775
+We found strong evidence of a linear relationship ($p$ = `r round(p_value, 5)`) 
+between the amount of gift aid received and family income at Elmhurst college
+in 2011. We estimate an increase in family income of \$1,000 to be associated 
+with a decrease in mean gift aid received of \$43, between \$21 and \$64 with 
+95% confidence.
 
 ## Final note
 

@@ -187,7 +187,7 @@ State your conclusion in context. Recall:
 
 ### Response
 
-\[Replace this text with your conclusion.\]
+Our p-value $p = 1.388621 \times 10^{-23}$ is less than our significance value $p = 0.05$ so we can reject the null hypothesis. We expect an increase of 0.66658 in science score for every unit increase in math score, between 0.5516466 and 0.7815135 with 95% confidence. While observing the data, no influential values were detected. 
 
 # Final reflection
 

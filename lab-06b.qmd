@@ -1,7 +1,7 @@
 ---
 title: "DATA 308: Lab 6b"
 subtitle: "Inference with SLR"
-author: "Your name here"
+author: "Dylan Wikel"
 format: 
   html:
     embed-resources: true

@@ -159,7 +159,15 @@ Use the residuals-versus-leverage plot to identify observations that may have re
 
 #### Response
 
-\[Replace this text with your sensitivity analysis.\]
+```{r}
+hsb2 |>
+  slice(21)
+
+score_model_minus21 <- lm(science ~ math, data = slice(hsb2, -21))
+
+tidy(score_model_minus21)
+```
+I am not concerned about unusual values as I did not find concerning influential points.
 
 ## 5. Reporting your results
 

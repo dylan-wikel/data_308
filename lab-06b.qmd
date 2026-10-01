@@ -133,7 +133,7 @@ Are you concerned that the linearity condition is not satisfied?
 
 #### Response
 
-\[Replace this text with your assessment of linearity. Refer to specific evidence from the plot.\]
+I am not concerned that the linearity condition is not satisfied as the data appear to follow a linear pattern in the residuals vs. fitted plot.
 
 ### 3. Constant variance
 
@@ -141,7 +141,7 @@ Are you concerned that the constant variance condition is not satisfied?
 
 #### Response
 
-\[Replace this text with your assessment of constant variance. Refer to specific evidence from the plots.\]
+The variance appears fairly constant in the residuals vs. fitted plot so I am not concerned that we've not satisfied the variance condition.
 
 ### 4. Normality
 
@@ -149,7 +149,7 @@ Are you concerned that the normality condition is not satisfied?
 
 #### Response
 
-\[Replace this text with your assessment of normality. Refer to specific evidence from the plot or sample.\]
+When examining the Q-Q plot, the data appear to follow a fairly normal distribution. I believe that the normality condition is satisfied.
 
 ### Sensitivity to unusual observations
 
@@ -175,7 +175,7 @@ State your statistical decision with a significance level of 0.05.
 
 ### Response
 
-\[Replace this text with your statistical decision.\]
+Reject $H_0$ as we have a p-value of less than $0.05$ and less than $0.001$ where $p = 1.388621e-23$
 
 ## Conclusion in context
 

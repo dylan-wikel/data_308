@@ -45,7 +45,7 @@ State your proposed theoretical population model.
 
 ### Response
 
-$$\text{Standardized Science Scores}_i = \beta_0 + \beta_1(\text{Standardized Math Scores}) + \epsilon_i$$
+$\text{Standardized Science Score}_i = \beta_0 + \beta_1(\text{Standardized Math Score}) + \epsilon_i$
 
 ## 2. Hypotheses
 
@@ -53,8 +53,8 @@ State your hypotheses.
 
 ### Response
 
-$$H_0 = \beta_1 = 0$$
-$$H_a = \beta_1 \ne 0$$
+$H_0: \beta_1 = 0$ 
+$H_a: \beta_1 \ne 0$
 
 ## Data
 
@@ -88,7 +88,6 @@ Use `tidy()` to display the estimated coefficients, their standard errors, test 
 ### Response
 
 ```{r}
-# Replace NULL with the fitted model
 tidy(
   score_model,
   conf.int = TRUE
@@ -101,7 +100,7 @@ Write out the estimated regression equation.
 
 ### Response
 
-$$\hat{Y} = 16.75789 + 0.66658(\text{Standardized Math Score})$$
+$\hat{Y} = 16.75789 + 0.66658\times\text{Standardized Math Score}$
 
 ## 4. Assessing model suitability
 
@@ -133,7 +132,7 @@ Are you concerned that the linearity condition is not satisfied?
 
 #### Response
 
-I am not concerned that the linearity condition is not satisfied as the data appear to follow a linear pattern in the residuals vs. fitted plot.
+The linearity condition appears to be satisfied on visual inspection of the residuals vs. fitted plot as the data appear to follow a linear pattern around 0.
 
 ### 3. Constant variance
 
@@ -141,7 +140,7 @@ Are you concerned that the constant variance condition is not satisfied?
 
 #### Response
 
-The variance appears fairly constant in the residuals vs. fitted plot so I am not concerned that we've not satisfied the variance condition.
+The constant variance condition appears satisfied as the variance appears fairly constant in the residuals vs. fitted plot.
 
 ### 4. Normality
 
@@ -167,6 +166,7 @@ score_model_minus21 <- lm(science ~ math, data = slice(hsb2, -21))
 
 tidy(score_model_minus21)
 ```
+
 I am not concerned about unusual values as I did not find concerning influential points.
 
 ## 5. Reporting your results
@@ -175,7 +175,7 @@ State your statistical decision with a significance level of 0.05.
 
 ### Response
 
-Reject $H_0$ as we have a p-value of less than $0.05$ and less than $0.001$ where $p = 1.388621e-23$
+Reject $H_0$ as we have a p-value of less than $0.05$ and less than $0.001$ where $p = 1.388621 \times 10^{-23}$
 
 ## Conclusion in context
 
@@ -187,7 +187,7 @@ State your conclusion in context. Recall:
 
 ### Response
 
-Our p-value $p = 1.388621 \times 10^{-23}$ is less than our significance value $p = 0.05$ so we can reject the null hypothesis. We expect an increase of 0.66658 in science score for every unit increase in math score, between 0.5516466 and 0.7815135 with 95% confidence. While observing the data, no influential values were detected. 
+Our p-value $p = 1.388621 \times 10^{-23}$ is less than our significance value $p = 0.05$ so we can reject the null hypothesis. We expect an increase of 0.667 points in standarized science score for every unit increase in standardized math score, between 0.552 and 0.782 points higher with 95% confidence. While observing the data, no influential values were detected.
 
 # Final reflection
 
@@ -195,4 +195,4 @@ Why does this study allow us to investigate an association but not establish tha
 
 ### Response
 
-\[Replace this text with your response.\]
+The association between math and science scores should not be interpreted as a causal relationship because this was an observational study, and students were not randomly assigned different levels of math performance. Although higher math scores were associated with higher science scores, other factors may help explain this relationship. For example, students with stronger overall academic ability, greater access to educational resources, or more supportive learning environments may tend to perform well in both subjects. Because these factors were not experimentally controlled, we can conclude that math and science scores are associated, but not that higher math scores directly cause higher science scores.

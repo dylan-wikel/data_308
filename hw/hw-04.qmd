@@ -1,7 +1,7 @@
 ---
 title: "DATA 308: Homework 4"
 subtitle: "Inference with simple linear regression"
-author: "Your name here"
+author: "Dylan Wikel"
 format: 
   html:
     echo: true
@@ -48,7 +48,7 @@ State your proposed theoretical population model.
 
 ### Response
 
-[Replace this text with your model. Recall you can use math notation like $Y_i$ and $\beta_0$.]
+$$Y_i = \beta_0 + \beta_1X_i + \epsilon_i$$
 
 ## 2. Hypotheses
 
@@ -56,7 +56,8 @@ State your hypotheses.
 
 ### Response
 
-[Replace this text with your hypotheses. Recall you can use math notation like $H_0$ and $\beta_1$.]
+$$\text{Null Hypothesis: } H_0 = \beta_1$$
+$$\text{Alternative Hypothesis: } H_a \ne \beta_1$$
 
 ## Data
 
@@ -84,7 +85,8 @@ Fit your proposed model.
 ### Response
 
 ```{r}
-
+atus_model <- lm(weekly_earnings ~ sleep_time, data = atus_college_workers)
+atus_model
 ```
 
 ## Viewing estimated model
@@ -97,7 +99,7 @@ We have used `summary()` and `confint()` in the past, this is a different option
 ```{r}
 # Replace NULL with the fitted model
 tidy(
-  NULL,
+  atus_model,
   conf.int = TRUE
 )
 ```
@@ -108,7 +110,7 @@ Write out the estimated regression equation.
 
 ### Response
 
-[Replace this text with your estimated regression equation.]
+$$\hat Y \text{ Weekly Earnings}_i = 386.01 + 0.084 \times \text {Sleep Time}_i$$
 
 ## 4. Assessing model suitability
 
@@ -122,7 +124,7 @@ AKA: Based on the available information in the help documentation, is it reasona
 
 #### Response
 
-[Replace this text with your assessment of independence.]
+
 
 ### Diagnostic plots
 

@@ -1,0 +1,189 @@
+---
+title: "DATA 308: Homework 4"
+subtitle: "Inference with simple linear regression"
+author: "Your name here"
+format: 
+  html:
+    echo: true
+    message: false
+    warning: false
+    toc: true
+    toc-depth: 4
+    embed-resources: true
+---
+
+```{r}
+library(ggfortify)
+library(hellodatascience)
+library(broom)
+library(tidyverse)
+```
+
+# Instructions
+
+For this activity we will:
+
+1. Specify a simple linear regression model to investigate the relationship of interest.
+2. Specify our hypotheses.
+3. Fit the proposed model.
+4. Assess suitability of our proposed model.
+5. Report our statistical decision, conclusion in context, and estimate of the association, indicating any model sensitivity.
+
+
+# Investigation
+
+## Research question
+
+The [American Time Use Survey (ATUS)](https://www.bls.gov/tus/overview.htm) provides estimates about how Americans spend their time. 
+The American Time Use Survey is conducted by the U.S. Census Bureau for the Bureau of Labor Statistics. 
+ATUS respondents are randomly selected from households that have completed their final interview for the Current Population Survey, and only one person is selected from each participating household.
+
+> Among full-time college or university students represented in the 2024 ATUS data who were employed part time, is mean time spent sleeping on the diary day linearly associated with usual weekly earnings?
+
+Let's use the weekly earnings as our response variable.
+
+## 1. Our model
+
+State your proposed theoretical population model.
+
+### Response
+
+[Replace this text with your model. Recall you can use math notation like $Y_i$ and $\beta_0$.]
+
+## 2. Hypotheses
+
+State your hypotheses.
+
+### Response
+
+[Replace this text with your hypotheses. Recall you can use math notation like $H_0$ and $\beta_1$.]
+
+## Data
+
+We will use the `atus_college` dataset from the `hellodatascience` R package to investigate our research question.
+Start by entering `?atus_college` into the Console to bring up the help documentation, then run the code chunk below to glimpse your dataset.
+
+Notice I am filtering the original `atus_college` dataset to only include people enrolled in college full time and working part time.
+I am then dropping an rows missing either `weekly_earnings` or `sleep_time`.
+For this assignment you should use the `atus_college_workers` dataset.
+
+```{r}
+data("atus_college")
+
+atus_college_workers <- atus_college |> 
+  filter(enrollment == "Full Time" & employment == "Part Time") |> 
+  drop_na(weekly_earnings, sleep_time)
+
+glimpse(atus_college_workers)
+```
+
+## 3. Fitting your model
+
+Fit your proposed model. 
+
+### Response
+
+```{r}
+
+```
+
+## Viewing estimated model
+
+Use `tidy()` to display the estimated coefficients, their standard errors, test statistics, p-values, and 95% confidence intervals. 
+We have used `summary()` and `confint()` in the past, this is a different option that shows us all the results we want together.
+
+### Response
+
+```{r}
+# Replace NULL with the fitted model
+tidy(
+  NULL,
+  conf.int = TRUE
+)
+```
+
+## Estimate model
+
+Write out the estimated regression equation.
+
+### Response
+
+[Replace this text with your estimated regression equation.]
+
+## 4. Assessing model suitability
+
+We will assess each model condition and then investigate whether the fitted model is sensitive to unusual observations.
+
+### 1. Independence
+
+Are you concerned that the independence condition is not satisfied?
+
+AKA: Based on the available information in the help documentation, is it reasonable to treat the observations as independent? Explain what evidence supports your assessment and identify any limitations in the available study information.
+
+#### Response
+
+[Replace this text with your assessment of independence.]
+
+### Diagnostic plots
+
+Generate the four standard diagnostic plots.
+
+#### Response
+
+```{r}
+
+```
+
+
+### 2. Linearity
+
+Are you concerned that the linearity condition is not satisfied?
+
+#### Response
+
+[Replace this text with your assessment of linearity. Refer to specific evidence from the plot.]
+
+### 3. Constant variance
+
+Are you concerned that the constant variance condition is not satisfied?
+
+#### Response
+
+[Replace this text with your assessment of constant variance. Refer to specific evidence from the plots.]
+
+### 4. Normality
+
+Are you concerned that the normality condition is not satisfied?
+
+#### Response
+
+[Replace this text with your assessment of normality. Refer to specific evidence from the plot or sample.]
+
+### Sensitivity to unusual observations
+
+Use the residuals-versus-leverage plot to identify any observations that may have relatively high influence. If you identify a potentially influential observation, use slice() to inspect it. Then refit the model without that observation and compare the results. Is the conclusion sensitive to that observation?
+
+#### Response
+
+[Replace this text with your sensitivity analysis.]
+
+## 5. Reporting your results
+
+State your statistical decision with a significance level of 0.05.
+
+### Response
+
+[Replace this text with your statistical decision.]
+
+## Conclusion in context
+
+State your conclusion in context. Recall:
+
+- One sentence should be your conclusion for the hypothesis test, with the p-value provided in parentheses. 
+- The second sentence should be your estimate and 95% confidence interval interpreted in context.
+- The third should mention if your results were especially sensitive to an extreme observation, and provide insight into that observation.
+
+### Response
+
+[Replace this text with your conclusion.]
+

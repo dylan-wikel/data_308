@@ -48,7 +48,7 @@ State your proposed theoretical population model.
 
 ### Response
 
-$$Y_i = \beta_0 + \beta_1X_i + \epsilon_i$$
+$$\text{Weekly Earnings}_i = \beta_0 + \beta_1\times\text{Sleep Time}_i + \epsilon_i$$
 
 ## 2. Hypotheses
 
@@ -98,7 +98,6 @@ We have used `summary()` and `confint()` in the past, this is a different option
 ### Response
 
 ```{r}
-# Replace NULL with the fitted model
 tidy(
   atus_model,
   conf.int = TRUE
@@ -111,7 +110,7 @@ Write out the estimated regression equation.
 
 ### Response
 
-$$\hat Y \text{ Weekly Earnings}_i = 386.01 + 0.084 \times \text {Sleep Time}_i$$
+$$\hat{\text{ Weekly Earnings}}_i = 386.01 + 0.084 \times \text {Sleep Time}_i$$
 
 ## 4. Assessing model suitability
 

@@ -159,9 +159,10 @@ Are you concerned that the constant variance condition is not satisfied?
 
 #### Response
 
-There is some concern regarding constant variance as there are some outliers
-closer to the middle of the plot. Aside from some outliers, the variance is
-somewhat constant.
+The variance appears constant aside from the extreme outlying data points 7, 10,
+and 61. Examining the shape, there is also some slight fanning. Based on the
+extreme outliers and mild fanning behavior, I do not think that the constant
+variance condition is not satisfied. 
 
 ### 4. Normality
 
@@ -170,8 +171,9 @@ Are you concerned that the normality condition is not satisfied?
 #### Response
 
 The data appear fairly normal following the Q-Q plot line very closely. However,
-there are some outliers at the end of the line that do not appear to follow the
-normality line. Further investigation into the outliers is necessary.
+there are some data points that trail off at the end that do not appear to 
+follow the normality line. The data do not appear normal upon visual inspection
+of the Q-Q plot. Further investigation into the outliers is necessary.
 
 ### Sensitivity to unusual observations
 
@@ -189,10 +191,12 @@ atus_model_minus7 <- lm(weekly_earnings ~ sleep_time,
 tidy(atus_model_minus7)
 ```
 
-I identified 3 potentially concerning data points 7, 10, and 61 after inspecting
-the fitted vs. residuals and Q-Q plots. After testing the model on each individual
-data point, data point 7 appears to have the greatest effect on the model,
-changing the slope from positive to negative after removing it.
+I identified 3 potentially concerning data points 7, 10, and 61 after visually 
+inspecting diagnostic plots. After testing the model on each individual data 
+point, data point 7 appears to have the greatest effect on the model, changing 
+the slope from positive to negative after removing it. I inspected the data 
+further and found that data point 7 makes an unusually large amount of money 
+when compared to the rest of the dataset, followed by data points 10 and 61.
 
 ## 5. Reporting your results
 
@@ -201,7 +205,7 @@ State your statistical decision with a significance level of 0.05.
 ### Response
 
 Fail to reject $H_0$ as we have a p-value greater than $0.05$ where 
-$p = 0.98329513$. 
+$p = 0.8535800$. 
 
 ## Conclusion in context
 
@@ -213,5 +217,14 @@ State your conclusion in context. Recall:
 
 ### Response
 
-[Replace this text with your conclusion.]
+The results do not provide sufficient evidence of a linear association between 
+time spent sleeping on the "diary day" and usual weekly earnings among full-time 
+college students employed part time in the 2024 ATUS data ($p = 0.854$). We 
+estimate that one additional minute of sleep is associated with an increase in 
+average weekly earnings of \$0.08, between −\$0.82 and \$0.99 with 95% confidence. 
+This interval contains 0. Our estimated slope was sensitive to observation 7, a 
+student with particularly high weekly earnings. Removing observation 7 changed 
+the slope from 0.084 to -0.007, however, removing this observation was did not 
+influence our p-value enough to change our statistical decision to reject the 
+null hypothesis.
 

@@ -86,6 +86,7 @@ Fit your proposed model.
 
 ```{r}
 atus_model <- lm(weekly_earnings ~ sleep_time, data = atus_college_workers)
+
 atus_model
 ```
 
@@ -124,7 +125,13 @@ AKA: Based on the available information in the help documentation, is it reasona
 
 #### Response
 
-
+Information about the sample is limited, however the data comes from a random
+sample of individuals representing their households across the U.S. who 
+responded to the ATUS survey. Based on this, I think that the independence 
+condition is satisfied. A primary concern is that the people selected for the 
+survey agreed to be apart of the study representing a household as a single 
+individual of the household. The subset sample size (n = 74) might also be too 
+small to accurately represent college workers in the U.S.
 
 ### Diagnostic plots
 
@@ -133,7 +140,7 @@ Generate the four standard diagnostic plots.
 #### Response
 
 ```{r}
-
+autoplot(atus_model)
 ```
 
 
@@ -143,7 +150,8 @@ Are you concerned that the linearity condition is not satisfied?
 
 #### Response
 
-[Replace this text with your assessment of linearity. Refer to specific evidence from the plot.]
+Upon inspection of the Residuals vs. Fitted plot, the data appear to be fairly
+linear following a linear pattern around  0.
 
 ### 3. Constant variance
 
@@ -151,7 +159,9 @@ Are you concerned that the constant variance condition is not satisfied?
 
 #### Response
 
-[Replace this text with your assessment of constant variance. Refer to specific evidence from the plots.]
+There is some concern regarding constant variance as there are some outliers
+closer to the middle of the plot. Aside from some outliers, the variance is
+somewhat constant.
 
 ### 4. Normality
 
@@ -159,7 +169,9 @@ Are you concerned that the normality condition is not satisfied?
 
 #### Response
 
-[Replace this text with your assessment of normality. Refer to specific evidence from the plot or sample.]
+The data appear fairly normal following the Q-Q plot line very closely. However,
+there are some outliers at the end of the line that do not appear to follow the
+normality line. Further investigation into the outliers is necessary.
 
 ### Sensitivity to unusual observations
 

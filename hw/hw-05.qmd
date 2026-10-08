@@ -1,0 +1,170 @@
+---
+title: "DATA 308: Homework 5"
+subtitle: "Multiple linear regression"
+author: "Dylan Wikel
+format: pdf
+knitr:
+  opts_chunk:
+    message: false
+    warning: false
+    echo: true
+---
+
+```{r}
+library(ISLR2)
+library(janitor)
+library(tidyverse)
+
+data("Carseats")
+```
+
+
+## Question 1
+
+This question should be answered using the `car_seats` data set. `car_seats` is a cleaned version of the data I made, to view the data documentation you must search `?Carseats`
+
+```{r}
+car_seats <- Carseats |> 
+  mutate(
+    ShelveLoc = factor(ShelveLoc,levels = c("Bad", "Medium", "Good")),
+    US = factor(US, levels = c(FALSE, TRUE))
+  ) |> 
+  clean_names()
+```
+
+Run the code below to view 2-D scatter plots of sales plotted against selected predictors.
+```{r}
+car_seats |> 
+  select(sales, price, urban, shelve_loc, age) |> 
+  pairs()
+```
+
+
+### Question 1a
+
+Fit a multiple regression model to predict `sales` using `price`, `urban`, `shelve_loc` and `age`.
+
+#### Response
+
+
+```{r}
+car_seat_mlr <- lm(sales ~ price + urban + shelve_loc + age, car_seats)
+
+car_seat_mlr
+```
+
+### Question 1b 
+
+Write out the theoretical population model, being careful to handle the qualitative variables properly.
+
+#### Response
+
+
+
+### Question 1c 
+
+Write out your fitted model, being careful to handle the qualitative variables properly.
+
+#### Response
+
+
+
+
+### Question 1d
+
+Provide an interpretation of each coefficient in the model. Be careful—some of the variables in the model are qualitative!
+
+#### Response
+
+
+
+### Question 1e
+
+Using the original full model, obtain 95 % confidence intervals for each of the coefficients (i.e., slopes).
+
+#### Response
+
+
+
+
+### Question 1f
+
+If we wanted confidence intervals with a confidence level of 99%, would they be narrower or wider than the 95% confidence intervals?
+
+#### Response
+
+
+
+
+### Question 1g
+
+Using the original full model, compute a 95% prediction interval for the number of sales when a car seat price is $100, its sold in an urban location, has a good shelving location, and the average age of the local population is 30.
+
+#### Response
+
+
+
+
+### Question 1h
+
+We would expect price to be very related to the number of sales made. Conduct a hypothesis test to assess if any of the remaining explanatory variables are linearly related to number of car seats sold, when price is in the model.
+
+#### Response
+
+
+
+
+### Question 1i
+
+In which of the models (a) or (subsetted model from part h) is the standard error for the price slope larger? Why do you think that is?
+
+#### Response
+
+
+
+
+## Question 2
+
+In this problem we will investigate the t-statistic for the null hypothesis $H_0 : \beta = 0$ in simple linear regression without an intercept. To begin, run this code to simulate an explanatory x and a response y as follows.
+```{r}
+set.seed(1) # Setting a random seed makes it reproducible. It is useful when you are going to randomly generate numbers
+
+x <- rnorm(100) # Generated 100 standard normal random variables
+y <- 2 * x + rnorm(100) # Calculates Y with more added randomness
+
+simulated_data <- data.frame(x = x, y = y)
+```
+
+### Question 2a 
+
+Perform a simple linear regression of $y$ onto $x$ from `simulated_data`, without an intercept. Report: 
+
+- the coefficient estimate $\hat{\beta}_1$, 
+- the standard error of this coefficient estimate, and 
+- the t-statistic and p-value associated with the null hypothesis $H_0 : \beta_1 = 0$. 
+
+(You can perform regression without an intercept using the command `lm(y ∼ 0 + x, data = simulated_data)`.)
+
+#### Response
+
+
+
+### Question 2b
+
+Now perform a simple linear regression of $x$ onto $y$ without an intercept, and report:
+
+- coefficient estimate $\hat{\beta}_1$, 
+- its standard error, and 
+- the corresponding t-statistic and p-values associated with the null hypothesis $H_0 : \beta_1 = 0$. 
+
+#### Response
+
+
+
+### Question 2c
+
+What is the relationship between the results obtained in (2a) and (2b)? Specifically, what is the same and what is different, if anything?
+
+#### Response
+
+

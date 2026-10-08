@@ -179,7 +179,20 @@ Use the residuals-versus-leverage plot to identify any observations that may hav
 
 #### Response
 
-[Replace this text with your sensitivity analysis.]
+```{r}
+atus_college_workers |>
+  slice(7)
+
+atus_model_minus7 <- lm(weekly_earnings ~ sleep_time, 
+                        data = slice(atus_college_workers, -7))
+
+tidy(atus_model_minus7)
+```
+
+I identified 3 potentially concerning data points 7, 10, and 61 after inspecting
+the fitted vs. residuals and Q-Q plots. After testing the model on each individual
+data point, data point 7 appears to have the greatest effect on the model,
+changing the slope from positive to negative after removing it.
 
 ## 5. Reporting your results
 
@@ -187,7 +200,8 @@ State your statistical decision with a significance level of 0.05.
 
 ### Response
 
-[Replace this text with your statistical decision.]
+Fail to reject $H_0$ as we have a p-value greater than $0.05$ where 
+$p = 0.98329513$. 
 
 ## Conclusion in context
 

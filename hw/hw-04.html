@@ -2648,7 +2648,7 @@ Coefficients:
 2 sleep_time   -0.00756     0.360   -0.0210  0.983 </code></pre>
 </div>
 </div>
-<p>I identified 3 potentially concerning data points 7, 10, and 61 after visually inspecting diagnostic plots. After testing the model on each individual data point, data point 7 appears to have the greatest effect on the model, changing the slope from positive to negative after removing it. I inspected the data further and found that data point 7 makes an unusually large amount of money when compared to the rest of the dataset, followed by data points 10 and 61.</p>
+<p>I identified 3 potentially concerning data points 7, 10, and 61 after visually inspecting the diagnostic plots. After testing the model on each individual data point, data point 7 appears to have the greatest effect on the model, changing the slope from positive to negative after removing it. I inspected the data further and found that data point 7 makes an unusually large amount of money when compared to the rest of the dataset, followed by data points 10 and 61.</p>
 </section>
 </section>
 </section>
@@ -2657,7 +2657,7 @@ Coefficients:
 <p>State your statistical decision with a significance level of 0.05.</p>
 <section id="response-11" class="level3">
 <h3 class="anchored" data-anchor-id="response-11">Response</h3>
-<p>Fail to reject <span class="math inline">\(H_0\)</span> as we have a p-value greater than <span class="math inline">\(0.05\)</span> where <span class="math inline">\(p = 0.98329513\)</span>.</p>
+<p>Fail to reject <span class="math inline">\(H_0\)</span> as we have a p-value greater than <span class="math inline">\(0.05\)</span> where <span class="math inline">\(p = 0.8535800\)</span>.</p>
 </section>
 </section>
 <section id="conclusion-in-context" class="level2">
@@ -2670,7 +2670,7 @@ Coefficients:
 </ul>
 <section id="response-12" class="level3">
 <h3 class="anchored" data-anchor-id="response-12">Response</h3>
-<p>The results do not provide sufficient evidence of a linear association between time spent sleeping on the “diary day” and usual weekly earnings among full-time college students employed part time in the 2024 ATUS data (<span class="math inline">\(p = 0.854\)</span>). We estimate that one additional minute of sleep is associated with an increase in average weekly earnings of $0.08, between −$0.82 and $0.99 with 95% confidence. This interval contains 0. Our estimated slope was sensitive to observation 7, which is a student who has high weekly earnings. Removing it changed the slope from positive to -0.007, though our statistical decision did not change.</p>
+<p>The results do not provide sufficient evidence of a linear association between time spent sleeping on the “diary day” and usual weekly earnings among full-time college students employed part time in the 2024 ATUS data (<span class="math inline">\(p = 0.854\)</span>). We estimate that one additional minute of sleep is associated with an increase in average weekly earnings of $0.08, between −$0.82 and $0.99 with 95% confidence. This interval contains 0. Our estimated slope was sensitive to observation 7, a student with particularly high weekly earnings. Removing observation 7 changed the slope from 0.084 to -0.007, however, removing this observation was did not influence our p-value enough to change our statistical decision to reject the null hypothesis.</p>
 </section>
 </section>
 </section>

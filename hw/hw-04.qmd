@@ -192,7 +192,7 @@ tidy(atus_model_minus7)
 ```
 
 I identified 3 potentially concerning data points 7, 10, and 61 after visually 
-inspecting diagnostic plots. After testing the model on each individual data 
+inspecting the diagnostic plots. After testing the model on each individual data 
 point, data point 7 appears to have the greatest effect on the model, changing 
 the slope from positive to negative after removing it. I inspected the data 
 further and found that data point 7 makes an unusually large amount of money 

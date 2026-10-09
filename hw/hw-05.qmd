@@ -50,7 +50,7 @@ Fit a multiple regression model to predict `sales` using `price`, `urban`, `shel
 ```{r}
 car_seat_mlr <- lm(sales ~ price + urban + shelve_loc + age, car_seats)
 
-car_seat_mlr
+summary(car_seat_mlr)
 ```
 
 ### Question 1b 
@@ -64,7 +64,7 @@ $$
 \beta_1\times \text{Price}_i + 
 \beta_2 \times \text{Urban}_i +
 \beta_3 \times \text{ShelveLoc}_i +
-\beta_4 \times \text{ShelveLoc}_i +
+\beta_4 \times \text{Age}_i +
 \epsilon_i
 $$
 
@@ -75,12 +75,12 @@ Write out your fitted model, being careful to handle the qualitative variables p
 #### Response
 
 $$
-\hat{\text{Sales}} = \beta_0 + 
-\beta_1\times \text{Price}_i + 
-\beta_2 \times \text{Urban}_i +
-\beta_3 \times \text{ShelveLoc}_i +
-\beta_4 \times \text{ShelveLoc}_i +
-\epsilon_i
+\hat{\text{Sales}} = 14.790575 + 
+(-0.060588 \times \text{Price}_i) + 
+(0.359849 \times \text{Urban = Yes}_i) +
+(2.002595 \times \text{ShelveLoc = Medium}_i) +
+(4.974159 \times \text{ShelveLoc = Good}_i) +
+(-0.050366 \times \text{Age}_i)
 $$
 
 

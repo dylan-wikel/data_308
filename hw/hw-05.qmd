@@ -59,7 +59,14 @@ Write out the theoretical population model, being careful to handle the qualitat
 
 #### Response
 
-
+$$
+\text{Sales} = \beta_0 + 
+\beta_1\times \text{Price}_i + 
+\beta_2 \times \text{Urban}_i +
+\beta_3 \times \text{ShelveLoc}_i +
+\beta_4 \times \text{ShelveLoc}_i +
+\epsilon_i
+$$
 
 ### Question 1c 
 
@@ -67,7 +74,14 @@ Write out your fitted model, being careful to handle the qualitative variables p
 
 #### Response
 
-
+$$
+\hat{\text{Sales}} = \beta_0 + 
+\beta_1\times \text{Price}_i + 
+\beta_2 \times \text{Urban}_i +
+\beta_3 \times \text{ShelveLoc}_i +
+\beta_4 \times \text{ShelveLoc}_i +
+\epsilon_i
+$$
 
 
 ### Question 1d
@@ -84,8 +98,9 @@ Using the original full model, obtain 95 % confidence intervals for each of the 
 
 #### Response
 
-
-
+```{r}
+confint(car_seat_mlr)
+```
 
 ### Question 1f
 

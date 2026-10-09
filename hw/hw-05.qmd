@@ -1,7 +1,7 @@
 ---
 title: "DATA 308: Homework 5"
 subtitle: "Multiple linear regression"
-author: "Dylan Wikel
+author: "Dylan Wikel"
 format: pdf
 knitr:
   opts_chunk:
@@ -90,7 +90,12 @@ Provide an interpretation of each coefficient in the model. Be careful—some of
 
 #### Response
 
-
+For `sales`, we estimate a decrease of \$-60.59 for each unit increase in 
+`price`, an increase in of $359.85 for stores in `urban` locations, an increase 
+of \$ 2002.60 on car seats with a `medium` quality shelving location in stores, 
+an increase of \$4974.60 on car seats with a `good` quality shelving location in
+stores, and a decrease of \$-50.37 for every unit increase of average `age` of
+local population. 
 
 ### Question 1e
 

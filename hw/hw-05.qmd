@@ -145,7 +145,27 @@ We would expect price to be very related to the number of sales made. Conduct a 
 
 #### Response
 
+$$
+H_0: \beta_1 = \beta_2 = 0 \newline
+H_a: \beta_1 \text{ and/or } \beta_2 \ne 0
+$$
 
+```{r}
+car_seats_2 <- lm(
+  sales ~ price + urban + shelve_loc + age,
+  data = car_seats
+)
+
+car_seats_price <- lm(
+  sales ~ price, 
+  data = car_seats
+)
+
+anova(car_seats_2, car_seats_price)
+```
+Reject $H_0$, we found very strong evidence ($p = 2.2 \times 10^-16$) that at
+least one of the explanatory variables, `urban`, `shelve_loc`, or `age`, is 
+linearly related to sales, when accounting for price.
 
 
 ### Question 1i

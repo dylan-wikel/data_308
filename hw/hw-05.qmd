@@ -113,8 +113,9 @@ If we wanted confidence intervals with a confidence level of 99%, would they be 
 
 #### Response
 
-
-
+They would be wider. To increase the possibility of the confidence interval
+containing the true value, the interval must be wider. A higher confidence
+interval is a less precise estimate, but more likely to contain the true value.
 
 ### Question 1g
 
@@ -122,8 +123,21 @@ Using the original full model, compute a 95% prediction interval for the number 
 
 #### Response
 
+```{r}
+new_car_seat_data <- data.frame(
+  price = 100,
+  urban = "Yes",
+  shelve_loc = "Good",
+  age = 30
+)
 
+predict(car_seat_mlr, newdata = new_car_seat_data, interval = "prediction")
+```
 
+We predict that average `sales` for stores where the car seats are priced at
+$100, are in an urban location, have good shelving location, and the average
+age of the population is 30 years old to be \$12554.85, between \$9107.91 and \
+$16001.78 with 95% confidence.
 
 ### Question 1h
 

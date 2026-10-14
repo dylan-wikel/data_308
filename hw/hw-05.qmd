@@ -48,7 +48,7 @@ Fit a multiple regression model to predict `sales` using `price`, `urban`, `shel
 
 
 ```{r}
-car_seat_mlr <- lm(sales ~ price + urban + shelve_loc + age, car_seats)
+car_seat_mlr <- lm(sales ~ price + urban + shelve_loc + age, data = car_seats)
 
 summary(car_seat_mlr)
 ```
@@ -59,7 +59,7 @@ Write out the theoretical population model, being careful to handle the qualitat
 
 #### Response
 
-$\text{Sales} = \beta_0 + \beta_1\times \text{Price}_i + \beta_2 \times (\text{Urban}_i = \text{Yes}) + \beta_3 \times (\text{Shelf Location}_i = \text{Medium}) + \beta_4 \times (\text{Shelf Location}_i = \text{Good}) + \beta_5 \times \text{Age}_i + \epsilon_i$
+$\text{Sales}_i = \beta_0 + \beta_1\times \text{Price}_i + \beta_2 \times (\text{Urban}_i = \text{Yes}) + \beta_3 \times (\text{Shelf Location}_i = \text{Medium}) + \beta_4 \times (\text{Shelf Location}_i = \text{Good}) + \beta_5 \times \text{Age}_i + \epsilon_i$
 
 ### Question 1c 
 
@@ -67,7 +67,7 @@ Write out your fitted model, being careful to handle the qualitative variables p
 
 #### Response
 
-$\hat{\text{Sales}} = 14.790575 + (-0.060588 \times \text{Price}_i) + (0.359849 \times \text{Urban = Yes}_i) + (2.002595 \times \text{ShelveLoc = Medium}_i) + (4.974159 \times \text{ShelveLoc = Good}_i) + (-0.050366 \times \text{Age}_i)$
+$\hat{\text{Sales}_i} = 14.790575 + (-0.060588 \times \text{Price}_i) + I(0.359849 \times \text{Urban}_i = \text{Yes}) + I(2.002595 \times \text{ShelveLoc}_i = \text{Medium}) + I(4.974159 \times \text{ShelveLoc}_i = \text{Good}) + (-0.050366 \times \text{Age}_i)$
 
 
 ### Question 1d
@@ -76,15 +76,17 @@ Provide an interpretation of each coefficient in the model. Be careful—some of
 
 #### Response
 
-For `sales`, we estimate \newline
-- A decrease of \$-60.59 for each unit increase in `price`. \newline
-- An increase in of \$359.85 for stores in `urban` locations. \newline
+For `sales` in thousands, we estimate: \newline
+- A decrease of \$60.59 for each unit increase in `price`. \newline
+- An increase of \$359.85 for stores in `urban` locations. \newline
 - An increase of \$2002.60 on car seats with a medium quality shelving location 
 in stores. \newline
 - An increase of \$4974.60 on car seats with a good quality shelving location 
 in stores. \newline
-- A decrease of \$-50.37 for every unit increase of average `age` of
+- A decrease of \$50.37 for every unit increase of average `age` of
 local population. \newline
+\newline
+(Every $\beta$ was multiplied by 1000 because sales is given in thousands)
 
 ### Question 1e
 
@@ -123,7 +125,7 @@ new_car_seat_data <- data.frame(
 predict(car_seat_mlr, newdata = new_car_seat_data, interval = "prediction")
 ```
 
-We predict that `sales` for stores where the car seats are priced at $100, are 
+We predict that `sales` for stores with a car seat priced at $100 that are 
 in an urban location, have "Good" shelving location, and the average age of the 
 population is 30 years old to be \$12554.85, between \$9107.91 and \$16001.78 
 with 95% confidence.
@@ -134,10 +136,8 @@ We would expect price to be very related to the number of sales made. Conduct a 
 
 #### Response
 
-$$
-H_0: \beta_2 = \beta_3 = \beta_4 = \beta_5 = 0 \newline
-H_a: \beta_2, \beta_3, \beta_4, \text{ and/or } \beta_5 \ne 0
-$$
+$H_0: \beta_2 = \beta_3 = \beta_4 = \beta_5 = 0$ \newline
+$H_a:\text { At least one of } \beta_2,\space \beta_3,\space \beta_4,\text{ or } \beta_5 \ne 0$
 
 ```{r}
 # redundant model "car_seats_2" below
@@ -156,7 +156,7 @@ anova(car_seats_2, car_seats_price)
 
 Reject $H_0$, we found very strong evidence ($p = 2.2 \times 10^{-16}$) that at
 least one of the explanatory variables, `urban`, `shelve_loc`, or `age`, is 
-linearly related to sales, when accounting for `price`.
+linearly related to `sales`, when accounting for `price`.
 
 
 ### Question 1i
@@ -170,11 +170,11 @@ summary(car_seat_mlr)
 summary(car_seats_price)
 ```
 
-The standard error for the price slope is smaller in the full model (a) with a
-value of 0.003700 when compared to the subsetted model (h) with a value of 
-0.005354. I think that it might be that `price` shares a relationship with
-another variable that reduces its error when coupled with that variable or 
-variables when compared to the error it produces in isolation.
+The standard error for the `price` slope is smaller in the full model (a), at 
+0.003700, compared to 0.005354 in the subsetted model (h). One possible 
+explanation is that `price` shares a relationship with other predictor variables 
+in the full model, which may help account for additional variation in `sales` 
+and improve the precision of the estimated `price` slope.
 
 ## Question 2
 
@@ -206,12 +206,10 @@ simulated_model <- lm(y ~ 0 + x, data = simulated_data)
 summary(simulated_model)
 ```
 
-APA style on last line in LaTeX.
-$$
-\beta_1 = 1.9939, \space \beta_1 \ne 0 \newline
-\text{Standard Error } = 0.1065 \newline
-\text{Reject } H_0, \space t(99) = 18.73, \space p = 2 \times 10^{-16}
-$$
+Reported values below and APA style report on last line in LaTeX: \newline
+$\beta_1 = 1.9939, \space \beta_1 \ne 0$ \newline 
+$\text{Standard Error } = 0.1065$ \newline
+$\text{Reject } H_0,\space t(99) = 18.73,\space p = 2 \times 10^{-16}$
 
 ### Question 2b
 
@@ -229,13 +227,16 @@ simulated_model_2 <- lm(x ~ 0 + y, data = simulated_data)
 summary(simulated_model_2)
 ```
 
-
 ### Question 2c
 
 What is the relationship between the results obtained in (2a) and (2b)? Specifically, what is the same and what is different, if anything?
 
 #### Response
 
-Comparing only with the things reported on the previous question, only the 
-$\beta_1$ and the standard error changed, where $\beta_1 = 0.39111$ and the
-standard error $= 0.02089$
+Comparing the results from 2a and 2b, only the coefficient estimate and standard 
+error changed among the statistics we were asked to report. The coefficient 
+estimate decreased from 1.9939 to 0.39111, while the standard error decreased 
+from 0.1065 to 0.02089.
+
+The t-statistic remained the same at 18.73 with 99 degrees of freedom, and both 
+models produced a p-value less than \(2 \times 10^{-16}\).

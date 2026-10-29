@@ -1,0 +1,209 @@
+---
+title: "DATA 308: Homework 6"
+subtitle: "Logistic regression"
+author: "Your name here"
+format: pdf
+knitr:
+  opts_chunk:
+    message: false
+    warning: false
+    echo: true
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+In this assignment you will be working with a dataset containing information on individuals from the Donner party. The Donner party was a group of pioneers traveling to California from Missouri on the Oregon trail by wagon train. They were trapped in the Sierra Nevada mountains by extremely heavy snowfall during the winter of 1846-1847 and eventually ran out of food supplies. Of the 90 members of the party, only 48 survived. We want to model chance of survival.
+
+Note that historically, and even sometimes today, sex and gender are recorded as binary variables and the names are used interchangeably. That does not make the data unusable, we often don't have perfect data, but we do have to think about what they meant to capture with the variable. 
+
+- If they expected there to be a relationship with the response variable due to how they experience the world socially, they may mean gender. 
+- If they expected there to be a relationship with the response variable due to biological factors, they may intended to measure meant sex.
+
+In this case since it was the 1800's I think they probably meant both and had no intention of the data being used for modeling. 
+
+I do think there could have been physical and societal affects from sex on survival chances, so we are going to use this variable, as well as age.
+
+## Question 1
+
+First we need to prepare the data.
+
+### Question 1a
+
+Import/read in our data. You can use `donner_data <- read_csv("https://csuci-data308-fa26.github.io/course-materials/data/donner-party.csv")` to read in your data, saving it into the object names `donner_data`.
+
+### Response
+
+```{r}
+
+```
+
+
+### Question 1b
+
+Don't forget you can use the `glimpse()` function to view the structure of your data (always a good idea).
+When you examine your data you may notice that the response variable `survived` is coded as a numeric variable.
+This is commonly done, but can make it difficult to appropriately plot.
+We can make a logical variable for plotting. You can use the following code in an R chunk: `donner_data <- mutate(donner_data, survived_logical = ifelse(survived == 1, yes = TRUE, no = FALSE))`.
+
+### Response
+
+```{r}
+
+```
+
+
+## Question 2
+
+Let's examine the relationship between our predictors and the response variable. We are doing this because we are learning logisitic regression, so I want us to be able to look at our results and compare them to the data. We can then assess if our results make sense based on the trends we saw.
+
+### Question 2a
+
+What is the relationship between sex and survival? Run the code below to visualize the relationship between these two variables and comment on what you see. 
+
+### Response
+
+```{r}
+ggplot(donner_data, aes(x = sex, fill = survived_logical)) +
+  geom_bar()
+```
+
+### Question 2b
+
+What is the relationship between age and survival? Comment what you observe.
+
+### Response
+
+```{r}
+ggplot(donner_data, aes(x = age, y = survived_logical)) +
+  geom_boxplot()
+```
+
+
+## Question 3
+
+Let's fit our model!
+
+
+### Question 3a
+
+Fit a logistic regression model to regress survival on sex and age. 
+
+### Response
+
+```{r}
+
+```
+
+
+### Question 3b
+
+Write out the fitted logistic regression model. 
+
+Note that Quarto documents support latex code. Latex code is not necessary, but if would like you can use the following for the first part of the model: $\log(\frac{\pi_i}{1 - \pi_i})$, otherwise you can explicitly write "Log odds of survival."
+
+
+### Response
+
+
+
+## Question 4: Inference
+
+### Question 4a
+
+Identify $\hat{\beta}_0$ and its 95% confidence interval using the profile likelihood method (called likelihood ratio in slides).
+
+### Response
+
+### Question 4b
+
+Provide an interpretation of $\hat{\beta}_0$ in context. Does the intercept have meaning in this context?
+
+### Response
+
+
+### Question 4c
+
+Identify $\hat{\beta}_{Age}$ and its 95% confidence interval using the profile likelihood method.  (Note I am using the subscript "Age" to denote the slope on the age predictor, since you may have specified this as the first or second predictor.)
+
+### Response
+
+
+
+### Question 4d
+
+Provide an interpretation of  $\hat{\beta}_{Age}$, the coefficient on the age predictor, in context.
+
+### Response
+
+
+### Question 4e
+
+Identify $e^{\hat{\beta}_{Age}}$ and its 95% confidence interval using the profile likelihood method.
+
+### Response
+
+
+### Question 4f
+
+Provide an interpretation of $e^{\hat{\beta}_{Age}}$ in context.
+
+### Response
+
+
+
+### Question 4g
+
+```{r}
+beta1_hat <- # Write the value of beta1 hat here
+```
+
+
+Which would be an invalid interpretation of $\hat{\beta}_{Age}$ (or a transformation of $\hat{\beta}_{Age}$)? [Hint: only one is an incorrect interpretation.]
+
+a. For a one year increase in age we estimate an associated log odds ratio of survival of `r beta1_hat`, for people of the same sex.
+b. For a one year increase in age we estimate an associated decrease in odds ratio of survival of `r exp(beta1_hat)`, for people of the same sex.
+c. For a one year increase in age we estimate an associated decrease in odds of survival by a factor of `r exp(beta1_hat)`, for people of the same sex.
+d. For a one year increase in age we estimate an associated multiplicative decrease in odds ratio of survival of `r exp(beta1_hat)`, for people of the same sex.
+e. For a one year increase in age we estimate an associated decrease in odds of survival by `r (1 - exp(beta1_hat)) * 100`%, for people of the same sex.
+
+### Response
+
+
+
+## Question 5
+
+Conduct a hypothesis test to investigate if survival is related to sex, controlling for age with a significance level of 0.05. Check that your results correspond to the 95% confidence interval you found.
+
+### Response
+
+
+
+## Question 6: Predictions
+
+Note that the `predict()` function can return different types of prediction. If we set `type = "response"` we will get predicted probabilities, but if we use the default `type = link` we will get the predicted log odds.
+
+### Question 6a
+
+What is the predicted probability of survival for a 60 year old man? (Edit the code below).
+
+### Response
+
+```{r}
+predict(
+  logisitic_survival_model, 
+  newdata = data.frame(age = 35, sex = "Female"),
+  type = "link"
+)
+```
+
+
+### Question 6b
+
+What is the predicted probability of survival for a 20 year old man? 
+
+### Response
+
+

@@ -1,7 +1,7 @@
 ---
 title: "DATA 308: Homework 6"
 subtitle: "Logistic regression"
-author: "Your name here"
+author: "Dylan Wikel"
 format: pdf
 knitr:
   opts_chunk:
@@ -12,6 +12,7 @@ knitr:
 
 ```{r}
 library(tidyverse)
+library(broom)
 ```
 
 
@@ -37,7 +38,9 @@ Import/read in our data. You can use `donner_data <- read_csv("https://csuci-dat
 ### Response
 
 ```{r}
+donner_data <- read_csv("https://csuci-data308-fa26.github.io/course-materials/data/donner-party.csv")
 
+glimpse(donner_data)
 ```
 
 
@@ -51,13 +54,19 @@ We can make a logical variable for plotting. You can use the following code in a
 ### Response
 
 ```{r}
-
+donner_data <-
+  mutate(donner_data, 
+         survived_logical = ifelse(
+           survived == 1, 
+           yes = TRUE, 
+           no = FALSE)
+         )
 ```
 
 
 ## Question 2
 
-Let's examine the relationship between our predictors and the response variable. We are doing this because we are learning logisitic regression, so I want us to be able to look at our results and compare them to the data. We can then assess if our results make sense based on the trends we saw.
+Let's examine the relationship between our predictors and the response variable. We are doing this because we are learning logistic regression, so I want us to be able to look at our results and compare them to the data. We can then assess if our results make sense based on the trends we saw.
 
 ### Question 2a
 
@@ -94,7 +103,14 @@ Fit a logistic regression model to regress survival on sex and age.
 ### Response
 
 ```{r}
+survival_model <- 
+  glm(
+    survived ~ sex + age, 
+    data = donner_data, 
+    family = "binomial"
+    )
 
+tidy(survival_model)
 ```
 
 
@@ -107,7 +123,7 @@ Note that Quarto documents support latex code. Latex code is not necessary, but 
 
 ### Response
 
-
+$\log(\frac{\pi_i}{1 - \pi_i}) = 1.599 + (-1.207)\times I(\text{sex}_i = \text{Male}) + (-0.034)\times(\text{age}_i)$
 
 ## Question 4: Inference
 

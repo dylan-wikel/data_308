@@ -1,0 +1,165 @@
+---
+title: "DATA 308: Lab 11b" 
+subtitle: "Poisson regression"
+author: "Dylan Wikel"
+format: pdf
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+library(performance)
+library(broom)
+library(tidyverse)
+```
+
+Neurons may fire selectively for particular types of stimuli.
+A visual-selective neuron is a brain cell that fires or responds strongly to specific features of a visual scene—such as a particular orientation, edge, motion direction, color, or complete object.
+To understand whether a neuron is a visual-selective neuron, 20 trials were run for each of the five image categories: animal, fruit, kids, military, space.
+In each trial, the number of spikes (the number of times that the neuron fired) within a 1-second window was recorded.
+
+
+Let's run the code below to read in and examine our data.
+
+```{r}
+neuron_data <- read_csv(
+  "https://www.ics.uci.edu/~zhaoxia/Data/chosen_neuron_data.csv",
+  show_col_types = FALSE
+)
+
+glimpse(neuron_data)
+```
+
+
+## Question 1
+
+Fit a model regressing number of neuron spikes on image category.
+
+### Response
+
+```{r}
+neuron_model <- 
+  glm(n_spikes ~ image_categ, 
+      data = neuron_data, 
+      family = "poisson")
+
+tidy(neuron_model)
+```
+
+
+## Question 2
+
+Write out the fitted regression model in context.
+
+### Response
+
+$log(\hat{\text{Neuron Spike}_i}) = -2.995732 + 4.276666(\text{Image Category}_i = \text{Fruit}) + 1.098612(\text{Image Category}_i = \text{Kids}) + 1.609438(\text{Image Category}_i = \text{Military}) + 1.479608\times10^{-15}(\text{Image Category}_i = \text{Space})$
+
+## Question 3
+
+Identify the estimate and 95% confidence interval for $\beta_j$ for the kids category. Provide an interpretation in context.
+
+### Response
+
+$\beta_\text{Kids}_i = 1.09861$ is the estimated log rate ratio of neuron spikes when looking at an image in the kids category compared to looking at an image in the animal category, between -0.9568748 and 4.105099, with 95% confidence. 
+
+## Question 4
+
+Identify the estimate and 95% confidence interval for $e^{\beta_j}$ for the kids category. Provide an interpretation in context.
+
+### Response
+
+```{r}
+tidy(neuron_model, conf.int = TRUE, exponentiate = TRUE)
+```
+$e^{\beta_{kids}} = 3$
+
+## Question 5
+
+Let's conduct a hypothesis test to determine if there is evidence that the expected number of spikes in a one-second window associated with image category?
+
+### Question 5a
+
+What are the null and alternative hypotheses?
+
+### Response
+
+$H_0: \text{all }\beta's = 0$
+$H_a: \text{at least one }\beta \ne 0$
+
+### Question 5b
+
+Conduct the appropriate test and report you p-value with your statistical decision.
+Hint: There are no predictors for the reduced model, so you can just specify `n_spikes ~ 1` as the formula.
+
+### Response
+
+```{r}
+partial_neuron_model <-
+  glm(n_spikes ~ 1,
+      data = neuron_data,
+      family = "poisson")
+
+anova(neuron_model, partial_neuron_model)
+```
+
+
+### Question 5c
+
+Report your conclusion in context for your hypothesis test.
+
+### Response
+
+We found significant evidence $p < 2.2\times 10^{-16}$. Therefore, we reject the null hypothesis and conclude that there is significant evidence that at least one image category is associated with a different spike rate in this particular neuron.
+
+## Question 6: Independence of observations condition
+
+A model condition for every model we have learned is independence of observations. 
+We have repeated trials from one neuron. 
+Based on the information provided, can we establish that spike counts from different trials are independent?
+Identify one reason that counts could be related across trials and one additional detail about the experiment that would help you evaluate this condition.
+
+### Response
+
+```{r}
+library(ggfortify)
+autoplot(neuron_model)
+```
+
+Based on the information provided, we cannot establish that spike counts from different trials are independent. Since the same neuron was measured repeatedly, its response during one trial could be influenced by previous stimulation. For example, the neuron might become less responsive after repeated exposure to certain images, which could affect subsequent spike counts. One additional detail that would help evaluate independence is the amount of time between trials. Knowing this would help us determine whether the neuron had enough time to recover between stimuli, although it would not guarantee independence.
+
+## Question 7: Scope of the conclusion
+
+Do these 100 trials provide information about 100 different neurons? Explain how this may or may not limit generalization to many neurons.
+
+### Response
+
+
+
+## Question 8 (Challenge your understanding) : Removing the intercept
+
+The only variable we have in our original model is categorical, so we have $k-1$ indicators as predictors in our model. If we wanted to be able to interpret the relationship between an image category and the response variable without comparing to a reference group, we can remove the intercept by specifying `n_spikes ~ -1 + imgage_categ` as the formula.
+
+### Question 8a
+
+Fit this model write out the fitted model.
+
+### Response
+
+
+
+### Question 8b
+
+Identify and interpret your estimate for $e^{\beta_j}$ for the kids predictor. 
+
+### Response
+
+
+### Question 8c
+
+How does your original model compare to this model? Are there any similarities?
+
+### Response
+
+

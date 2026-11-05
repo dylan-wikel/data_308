@@ -63,6 +63,13 @@ donner_data <-
          )
 ```
 
+```{r}
+donner_data <- donner_data |>
+  filter(family == "Other" | family == "Breen")
+
+glimpse(donner_data)
+```
+
 
 ## Question 2
 

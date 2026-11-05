@@ -78,6 +78,9 @@ What is the relationship between sex and survival? Run the code below to visuali
 ggplot(donner_data, aes(x = sex, fill = survived_logical)) +
   geom_bar()
 ```
+There are more males than females, but it appears that the proportion of females 
+that survived is slightly greater than males.
+
 
 ### Question 2b
 
@@ -89,6 +92,8 @@ What is the relationship between age and survival? Comment what you observe.
 ggplot(donner_data, aes(x = age, y = survived_logical)) +
   geom_boxplot()
 ```
+The people who survived have a lower median age and age range when compared to 
+the people who did not survive.
 
 
 ## Question 3
@@ -105,7 +110,7 @@ Fit a logistic regression model to regress survival on sex and age.
 ```{r}
 survival_model <- 
   glm(
-    survived ~ sex + age, 
+    survived_logical ~ sex + age, 
     data = donner_data, 
     family = "binomial"
     )
@@ -133,12 +138,20 @@ Identify $\hat{\beta}_0$ and its 95% confidence interval using the profile likel
 
 ### Response
 
+```{r}
+confint(survival_model)
+```
+$\hat{\beta_0}$ = 1.599, between 0.667 and 2.664, with 95% confidence
+
+
 ### Question 4b
 
 Provide an interpretation of $\hat{\beta}_0$ in context. Does the intercept have meaning in this context?
 
 ### Response
 
+This represents the log odds when the sex is non male and age is 0. This does not
+have meaning in context as there are no data points that are age 1.
 
 ### Question 4c
 
@@ -146,6 +159,9 @@ Identify $\hat{\beta}_{Age}$ and its 95% confidence interval using the profile l
 
 ### Response
 
+```{r}
+confint(survival_model, parm = "age")
+```
 
 
 ### Question 4d
@@ -154,12 +170,21 @@ Provide an interpretation of  $\hat{\beta}_{Age}$, the coefficient on the age pr
 
 ### Response
 
+We expect a change in the log odds of survival for each unit increase in age of 
+-0.03379836, between -0.06531990 and -0.00544134, with 95% confidence and sex 
+held constant. 
 
 ### Question 4e
 
 Identify $e^{\hat{\beta}_{Age}}$ and its 95% confidence interval using the profile likelihood method.
 
 ### Response
+
+```{r}
+exp(-0.03379836)
+exp(-0.0653199)
+exp(-0.00544134)
+```
 
 
 ### Question 4f
@@ -168,12 +193,12 @@ Provide an interpretation of $e^{\hat{\beta}_{Age}}$ in context.
 
 ### Response
 
-
+$e^{\hat{\beta}_{Age}} = 0.9667664$ is the odds ratio decrease in expected 
 
 ### Question 4g
 
 ```{r}
-beta1_hat <- # Write the value of beta1 hat here
+beta1_hat <- -0.03379836
 ```
 
 
@@ -187,7 +212,7 @@ e. For a one year increase in age we estimate an associated decrease in odds of 
 
 ### Response
 
-
+b. For a one year increase in age we estimate an associated decrease in odds ratio of survival of `r exp(beta1_hat)`, for people of the same sex.
 
 ## Question 5
 
@@ -195,7 +220,17 @@ Conduct a hypothesis test to investigate if survival is related to sex, controll
 
 ### Response
 
+```{r}
+partial_survival_model <- 
+  glm(survived_logical ~ age, data = donner_data, family = "binomial")
 
+anova(survival_model, partial_survival_model)
+```
+$H_0: \beta_\text{sex} = 0$
+$H_a: \beta_\text{sex} \ne 0$
+
+With a p-value = 0.009494, we reject $H_0: \beta_\text{sex} = 0$. We have strong
+evidence that sex is related to survival when controlling for age. 
 
 ## Question 6: Predictions
 
@@ -209,12 +244,12 @@ What is the predicted probability of survival for a 60 year old man? (Edit the c
 
 ```{r}
 predict(
-  logisitic_survival_model, 
-  newdata = data.frame(age = 35, sex = "Female"),
-  type = "link"
+  survival_model, 
+  newdata = data.frame(age = 60, sex = "Male"),
+  type = "response"
 )
 ```
-
+The predicted probability of survival for a Male aged 60 is 0.163 or 16.3%.
 
 ### Question 6b
 
@@ -222,4 +257,11 @@ What is the predicted probability of survival for a 20 year old man?
 
 ### Response
 
-
+```{r}
+predict(
+  survival_model, 
+  newdata = data.frame(age = 20, sex = "Male"),
+  type = "response"
+)
+```
+The predicted probability of survival for a Male aged 20 is 0.429 or 42.9%.

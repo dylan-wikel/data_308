@@ -73,7 +73,7 @@ Identify the estimate and 95% confidence interval for $e^{\beta_j}$ for the kids
 ```{r}
 tidy(neuron_model, conf.int = TRUE, exponentiate = TRUE)
 ```
-$e^{\beta_{kids}} = 3$
+$e^{\beta_{kids}} = 3$ is the estimated rate ratio of neuron spikes when looking at an image in the kids category compared to looking at an image in the animal category, between 0.384091366 and 60.6487384, with 95% confidence
 
 ## Question 5
 
@@ -135,7 +135,7 @@ Do these 100 trials provide information about 100 different neurons? Explain how
 
 ### Response
 
-
+No, the trials provide information about one single neuron. The generalization may only be made about this particular neuron in this one participant. 
 
 ## Question 8 (Challenge your understanding) : Removing the intercept
 
@@ -147,7 +147,14 @@ Fit this model write out the fitted model.
 
 ### Response
 
+```{r}
+no_ref_model <- 
+  glm(n_spikes ~ -1 + image_categ,
+      data = neuron_data,
+      family = "poisson")
 
+tidy(no_ref_model)
+```
 
 ### Question 8b
 
@@ -155,6 +162,11 @@ Identify and interpret your estimate for $e^{\beta_j}$ for the kids predictor.
 
 ### Response
 
+```{r}
+tidy(no_ref_model, exponentiate = TRUE)
+```
+
+$e^{\beta_{kids}}$ = 0.15 is the estimated rate ratio of neuron spikes when looking at an image in the kids category recorded within a one second time window.
 
 ### Question 8c
 
@@ -162,4 +174,4 @@ How does your original model compare to this model? Are there any similarities?
 
 ### Response
 
-
+Fruit is consistently a larger estimate. By not comparing it to a reference group, it gives us a more interpretable value for the average rate of neuron spikes per second that corresponds to each image type. Another thing I noticed is that all of the p-values have become significant after modifying the model to not compare to the reference group. However, I think that they are now not in proper context for interpretation.

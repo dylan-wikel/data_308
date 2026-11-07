@@ -62,7 +62,7 @@ Identify the estimate and 95% confidence interval for $\beta_j$ for the kids cat
 
 ### Response
 
-$\beta_\text{Kids}_i = 1.09861$ is the estimated log rate ratio of neuron spikes when looking at an image in the kids category compared to looking at an image in the animal category, between -0.9568748 and 4.105099, with 95% confidence. 
+$\beta_\text{Kids} = 1.09861$$ is the estimated log rate ratio of neuron spikes when looking at an image in the kids category compared to looking at an image in the animal category, between -0.9568748 and 4.105099, with 95% confidence. 
 
 ## Question 4
 

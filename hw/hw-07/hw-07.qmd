@@ -1,0 +1,206 @@
+---
+title: "Data 308: Homework 7"
+subtitle: "Poisson regression"
+author: "Dylan Wikel"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 4
+execute:
+  message: false
+  warning: false
+---
+
+[Data example from](https://bookdown.org/roback/bookdown-BeyondMLR/ch-poissonreg.html#case-study-campus-crime)
+
+```{r}
+library(tidyverse)
+library(broom)
+```
+
+# Part A: Basic Poisson Regression
+
+## Question 1
+
+In this homework we will investigate violent crimes on college campuses. 
+Each row of `c_data.csv` contains crime information from a post secondary institution, either a college or university. 
+The variables include:
+
+- `Enrollment` = enrollment at the school
+- `type` = college (C) or university (U)
+- `nv` = the number of violent crimes for that institution for the given year
+- `nvrate` = number of violent crimes per 1000 students
+- `enroll1000` = enrollment at the school, in thousands
+- `region` = region of the country (C = Central, MW = Midwest, NE = Northeast, SE = Southeast, SW = Southwest, and W = West)
+
+## Question 1
+
+Read in the data using `crime <- read_csv("c_data.csv")`. Make sure your data is save in the same location as your homework file.
+
+```{r}
+crime <- read_csv("c_data.csv")
+
+glimpse(crime)
+```
+
+
+## Question 2
+
+We are interested primarily in differences in violent crime between institutional types controlling for difference in regions. 
+
+Change `eval: false` to `eval: true` to run the code chunk below, to plot our response variable by institutional types and regions.
+
+```{r}
+#| eval: true
+ggplot(crime, aes(x = region, y = nv, fill = type)) +
+  geom_boxplot() +
+  labs(y = "Annual number of violent crimes")
+```
+
+
+## Question 3
+
+Fit a **poisson** model regressing the expected annual number of violent crimes on region and institutional type.
+
+### Response
+
+```{r}
+crime_model <- 
+  glm(
+    nv ~ region + type, 
+    data = crime, 
+    family = "poisson"
+    )
+
+tidy(crime_model)
+```
+
+
+## Question 4 
+
+Write out your fitted model.
+
+
+### Response
+
+$\log(\widehat{Annual Number of Violent Crimes}_i) = 0.335 + 0.489I(\text{Region}_i = \text{Midwest}) + 0.524I(\text{Region}_i = \text{Northeast}) + 0.871I(\text{Region}_i = \text{Southeast}) + 0.245I(\text{Region}_i = \text{Southwest}) + 0.735I(\text{Region}_i = \text{West}) + 1.241I(\text{Type}_i = \text{University})$
+
+## Question 5
+
+Test if there is an association between institution type and the expected number of violent crimes committed annually, controlling for region, at a 0.05 significance level.
+
+### Response
+
+```{r}
+reduced_crime <-
+  glm(
+    nv ~ region,
+    data = crime,
+    family = "poisson"
+    )
+
+anova(crime_model, reduced_crime, test = "LRT")
+```
+
+$H_0: \beta_6 = 0$
+$H_a: \beta_6 \ne 0$
+
+Statistical decision: p-value < 0.05, so reject null hypothesis. 
+
+Conclusion in context: We found storng evidence (p-value < 2.2e-16, df = 1) of a association between expected number of violent crimes committed annually and type of institution.
+
+At the significance level of $\alpha = 0.05$, we reject the null hypothesis with ($p = 2.2 \times 10^{-16} < \alpha$), that type of institution is log related to annual number of crimes.
+
+# Part B: Crime rate per student
+
+Wait a minute—our original model does not account for differences in campus size! 
+If two campuses have the same crime rate per student, a campus with 30,000 students would have three times the expected annual number of crimes as a campus with 10,000 students.
+
+We would like to compare campuses while accounting for these differences in enrollment.
+
+## Question 6
+
+Suppose Campus A has 10,000 students and recorded 20 violent crimes last year. 
+Campus B has 30,000 students and recorded 60 violent crimes.
+
+Calculate the annual number of violent crimes per 1,000 students for each campus. 
+How does comparing these crime counts differ from comparing these rates?
+
+### Response
+
+```{r}
+campus_a <- (20 / 10000) * 1000
+
+campus_b <- (60 / 30000) * 1000
+
+campus_a
+campus_b
+```
+
+The rates are the same for both campuses where Campus A has a rate of `r campus_a` crimes per 1,000 students per year and Campus B has a rate of `r campus_b` crimes per 1,000 students per year.
+
+# Part C: Introducing an offset
+
+We want to modify our original model: add log enrollment as an offset. 
+The response variable remains the number of crimes, but the model will now allows us to investigate how the crime rate per student is associated with region and institution type.
+
+An offset differs from an ordinary predictor because its coefficient is fixed at 1, rather than estimated. This assumes that, holding region and institution type constant, doubling enrollment doubles the expected crime count.
+
+
+## Question 7
+
+Fit a **poisson** model regressing the annual number of violent crimes on region and institutional type, with an offset for enrollment count. To do this, add `offset(log(enrollment))` to the right-hand side of your model formula.
+
+### Response
+
+```{r}
+crime_model_adj <-
+  glm(
+    nv ~ region + type + offset(log(Enrollment)),
+    data = crime,
+    family = "poisson"
+  )
+
+tidy(crime_model_adj)
+```
+
+
+## Question 8
+
+Write out your fitted model.
+
+
+### Response
+
+
+
+## Question 9
+
+Test if there is an association between institution type and the expected number of violent crimes committed annually per student, controlling for region, at a 0.05 significance level.
+
+### Response
+
+
+
+# Part D: Model proposals
+
+Alzheimer's disease is a progressive and neurodegenerative disorder that affects memory, thinking, and behavior. 
+It is the most common form of dementia. 
+Research has shown that individuals with a family history of Alzheimer's are at higher risk of developing Alzheimer's.
+
+I want you to propose a study to investigate: to what extent does an individual's family history of Alzheimer's relate to increased chance of developing Alzheimer's?
+
+- Identify the response and explanatory variables, identifying their types.
+- Identify why confounding variables need to be considered.
+- Describe potential confounding variables, including how they are possibly related to both the response and explanatory variables.
+- Propose a model for the relationship between these variables, controlling for confounding.
+- State the assumptions for your proposed model.
+- Identify how your model would be used to address the research question (e.g., hypothesis test, confidence interval, predictive performance evaluation.
+
+*This question is meant to be preparation for proposing your final project!*
+
+## Response
+
+
+

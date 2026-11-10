@@ -84,7 +84,7 @@ Write out your fitted model.
 
 ### Response
 
-$\log(\widehat{Annual Number of Violent Crimes}_i) = 0.335 + 0.489I(\text{Region}_i = \text{Midwest}) + 0.524I(\text{Region}_i = \text{Northeast}) + 0.871I(\text{Region}_i = \text{Southeast}) + 0.245I(\text{Region}_i = \text{Southwest}) + 0.735I(\text{Region}_i = \text{West}) + 1.241I(\text{Type}_i = \text{University})$
+$\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = 0.335 + 0.489I(\text{Region}_i = \text{Midwest}) + 0.524I(\text{Region}_i = \text{Northeast}) + 0.871I(\text{Region}_i = \text{Southeast}) + 0.245I(\text{Region}_i = \text{Southwest}) + 0.735I(\text{Region}_i = \text{West}) + 1.241I(\text{Type}_i = \text{University})$
 
 ## Question 5
 
@@ -108,7 +108,7 @@ $H_a: \beta_6 \ne 0$
 
 Statistical decision: p-value < 0.05, so reject null hypothesis. 
 
-Conclusion in context: We found storng evidence (p-value < 2.2e-16, df = 1) of a association between expected number of violent crimes committed annually and type of institution.
+Conclusion in context: We found storng evidence (p-value < 2.2e-16, df = 1) of a association between expected number of violent crimes committed annually and type of institution, university versus college.
 
 At the significance level of $\alpha = 0.05$, we reject the null hypothesis with ($p = 2.2 \times 10^{-16} < \alpha$), that type of institution is log related to annual number of crimes.
 
@@ -157,7 +157,7 @@ Fit a **poisson** model regressing the annual number of violent crimes on region
 ```{r}
 crime_model_adj <-
   glm(
-    nv ~ region + type + offset(log(Enrollment)),
+    nv ~ offset(log(Enrollment)) + region + type,
     data = crime,
     family = "poisson"
   )
@@ -173,7 +173,7 @@ Write out your fitted model.
 
 ### Response
 
-
+$\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = \log(\text{Enrollment}) -8.509 + 0.099I(\text{Region}_i = \text{Midwest}) + 0.781I(\text{Region}_i = \text{Northeast}) + 0.877I(\text{Region}_i = \text{Southeast}) + 0.503	I(\text{Region}_i = \text{Southwest}) + 0.273I(\text{Region}_i = \text{West}) + 0.340I(\text{Type}_i = \text{University})$
 
 ## Question 9
 
@@ -181,6 +181,16 @@ Test if there is an association between institution type and the expected number
 
 ### Response
 
+```{r}
+crime_region_adj <-
+  glm(
+    nv ~ offset(log(Enrollment)) + type,
+    data = crime,
+    family = "poisson"
+  )
+
+anova(crime_model_adj, crime_region_adj, test = "LRT")
+```
 
 
 # Part D: Model proposals

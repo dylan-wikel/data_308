@@ -173,7 +173,7 @@ Write out your fitted model.
 
 ### Response
 
-$\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = \log(\text{Enrollment}) -8.509 + 0.099I(\text{Region}_i = \text{Midwest}) + 0.781I(\text{Region}_i = \text{Northeast}) + 0.877I(\text{Region}_i = \text{Southeast}) + 0.503	I(\text{Region}_i = \text{Southwest}) + 0.273I(\text{Region}_i = \text{West}) + 0.340I(\text{Type}_i = \text{University})$
+$\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = \log(\text{Enrollment}) -8.509 + 0.099I(\text{Region}_i = \text{Midwest}) + 0.781I(\text{Region}_i = \text{Northeast}) + 0.877I(\text{Region}_i = \text{Southeast}) + 0.503I(\text{Region}_i = \text{Southwest}) + 0.273I(\text{Region}_i = \text{West}) + 0.340I(\text{Type}_i = \text{University})$
 
 ## Question 9
 

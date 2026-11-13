@@ -2511,7 +2511,7 @@ $ region     &lt;chr&gt; &quot;SE&quot;, &quot;SE&quot;, &quot;W&quot;, &quot;W&
 <p>Write out your fitted model.</p>
 <section id="response-1" class="level3">
 <h3 class="anchored" data-anchor-id="response-1">Response</h3>
-<p><span class="math inline">\(\log(\widehat{Annual Number of Violent Crimes}_i) = 0.335 + 0.489I(\text{Region}_i = \text{Midwest}) + 0.524I(\text{Region}_i = \text{Northeast}) + 0.871I(\text{Region}_i = \text{Southeast}) + 0.245I(\text{Region}_i = \text{Southwest}) + 0.735I(\text{Region}_i = \text{West}) + 1.241I(\text{Type}_i = \text{University})\)</span></p>
+<p><span class="math inline">\(\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = 0.335 + 0.489I(\text{Region}_i = \text{Midwest}) + 0.524I(\text{Region}_i = \text{Northeast}) + 0.871I(\text{Region}_i = \text{Southeast}) + 0.245I(\text{Region}_i = \text{Southwest}) + 0.735I(\text{Region}_i = \text{West}) + 1.241I(\text{Type}_i = \text{University})\)</span></p>
 </section>
 </section>
 <section id="question-5" class="level2">
@@ -2540,8 +2540,10 @@ Model 2: nv ~ region
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 </div>
-<p><span class="math inline">\(H_0: \beta_j = 0\)</span> <span class="math inline">\(H_a: \beta_j \ne 0\)</span></p>
-<p>At the significance level of <span class="math inline">\(\alpha = 0.05\)</span>, we reject the null hypothesis with (<span class="math inline">\(p = 2.2 \times 10^{-16} &lt; \alpha\)</span>), that type of institution is associated with annual number of crimes.</p>
+<p><span class="math inline">\(H_0: \beta_6 = 0\)</span> <span class="math inline">\(H_a: \beta_6 \ne 0\)</span></p>
+<p>Statistical decision: p-value &lt; 0.05, so reject null hypothesis.</p>
+<p>Conclusion in context: We found storng evidence (p-value &lt; 2.2e-16, df = 1) of a association between expected number of violent crimes committed annually and type of institution, university versus college.</p>
+<p>At the significance level of <span class="math inline">\(\alpha = 0.05\)</span>, we reject the null hypothesis with (<span class="math inline">\(p = 2.2 \times 10^{-16} &lt; \alpha\)</span>), that type of institution is log related to annual number of crimes.</p>
 </section>
 </section>
 </section>
@@ -2582,6 +2584,28 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p>Fit a <strong>poisson</strong> model regressing the annual number of violent crimes on region and institutional type, with an offset for enrollment count. To do this, add <code>offset(log(enrollment))</code> to the right-hand side of your model formula.</p>
 <section id="response-4" class="level3">
 <h3 class="anchored" data-anchor-id="response-4">Response</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>crime_model_adj <span class="ot">&lt;-</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    nv <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(Enrollment)) <span class="sc">+</span> region <span class="sc">+</span> type,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> crime,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">&quot;poisson&quot;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(crime_model_adj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 5
+  term        estimate std.error statistic      p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 (Intercept)  -8.51       0.171   -49.7   0           
+2 regionMW      0.0994     0.178     0.560 0.575       
+3 regionNE      0.781      0.153     5.10  0.000000333 
+4 regionSE      0.877      0.153     5.72  0.0000000104
+5 regionSW      0.503      0.185     2.72  0.00663     
+6 regionW       0.273      0.187     1.46  0.145       
+7 typeU         0.340      0.132     2.57  0.0102      </code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="question-8" class="level2">
@@ -2589,6 +2613,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p>Write out your fitted model.</p>
 <section id="response-5" class="level3">
 <h3 class="anchored" data-anchor-id="response-5">Response</h3>
+<p><span class="math inline">\(\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = \log(\text{Enrollment}) -8.509 + 0.099I(\text{Region}_i = \text{Midwest}) + 0.781I(\text{Region}_i = \text{Northeast}) + 0.877I(\text{Region}_i = \text{Southeast}) + 0.503    I(\text{Region}_i = \text{Southwest}) + 0.273I(\text{Region}_i = \text{West}) + 0.340I(\text{Type}_i = \text{University})\)</span></p>
 </section>
 </section>
 <section id="question-9" class="level2">
@@ -2596,6 +2621,27 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p>Test if there is an association between institution type and the expected number of violent crimes committed annually per student, controlling for region, at a 0.05 significance level.</p>
 <section id="response-6" class="level3">
 <h3 class="anchored" data-anchor-id="response-6">Response</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>crime_region_adj <span class="ot">&lt;-</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    nv <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(Enrollment)) <span class="sc">+</span> type,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> crime,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">&quot;poisson&quot;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(crime_model_adj, crime_region_adj, <span class="at">test =</span> <span class="st">&quot;LRT&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: nv ~ offset(log(Enrollment)) + region + type
+Model 2: nv ~ offset(log(Enrollment)) + type
+  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
+1        74     426.01                          
+2        79     483.71 -5  -57.697 3.632e-11 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
 </section>
 </section>
 </section>

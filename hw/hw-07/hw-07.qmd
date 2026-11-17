@@ -81,10 +81,9 @@ tidy(crime_model)
 
 Write out your fitted model.
 
-
 ### Response
 
-$\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = 0.335 + 0.489I(\text{Region}_i = \text{Midwest}) + 0.524I(\text{Region}_i = \text{Northeast}) + 0.871I(\text{Region}_i = \text{Southeast}) + 0.245I(\text{Region}_i = \text{Southwest}) + 0.735I(\text{Region}_i = \text{West}) + 1.241I(\text{Type}_i = \text{University})$
+$\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = 0.335 + 0.489 \times I(\text{Region}_i = \text{Midwest}) + 0.524 \times I(\text{Region}_i = \text{Northeast}) + 0.871 \times I(\text{Region}_i = \text{Southeast}) + 0.245 \times I(\text{Region}_i = \text{Southwest}) + 0.735 \times I(\text{Region}_i = \text{West}) + 1.241 \times I(\text{Type}_i = \text{University})$
 
 ## Question 5
 
@@ -108,9 +107,9 @@ $H_a: \beta_6 \ne 0$
 
 Statistical decision: p-value < 0.05, so reject null hypothesis. 
 
-Conclusion in context: We found storng evidence (p-value < 2.2e-16, df = 1) of a association between expected number of violent crimes committed annually and type of institution, university versus college.
+Conclusion in context: We found strong evidence (p-value < 2.2e-16, df = 1) of a association between expected number of violent crimes committed annually and type of institution, university versus college.
 
-At the significance level of $\alpha = 0.05$, we reject the null hypothesis with ($p = 2.2 \times 10^{-16} < \alpha$), that type of institution is log related to annual number of crimes.
+At the significance level of $\alpha = 0.05$, we found strong evidence ($p = 2.2 \times 10^{-16} < \alpha$), that type of institution is log related to annual number of crimes when controlling for region.
 
 # Part B: Crime rate per student
 
@@ -173,7 +172,7 @@ Write out your fitted model.
 
 ### Response
 
-$\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = \log(\text{Enrollment}) -8.509 + 0.099I(\text{Region}_i = \text{Midwest}) + 0.781I(\text{Region}_i = \text{Northeast}) + 0.877I(\text{Region}_i = \text{Southeast}) + 0.503I(\text{Region}_i = \text{Southwest}) + 0.273I(\text{Region}_i = \text{West}) + 0.340I(\text{Type}_i = \text{University})$
+$\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = \log(\text{Enrollment}) -8.509 + 0.099I \times (\text{Region}_i = \text{Midwest}) + 0.781 \times I(\text{Region}_i = \text{Northeast}) + 0.877 \times I(\text{Region}_i = \text{Southeast}) + 0.503 \times I(\text{Region}_i = \text{Southwest}) + 0.273 \times I(\text{Region}_i = \text{West}) + 0.340 \times I(\text{Type}_i = \text{University})$
 
 ## Question 9
 
@@ -184,7 +183,7 @@ Test if there is an association between institution type and the expected number
 ```{r}
 crime_region_adj <-
   glm(
-    nv ~ offset(log(Enrollment)) + type,
+    nv ~ offset(log(Enrollment)) + region,
     data = crime,
     family = "poisson"
   )
@@ -192,6 +191,10 @@ crime_region_adj <-
 anova(crime_model_adj, crime_region_adj, test = "LRT")
 ```
 
+$H_0: \beta_6 = 0$
+$H_0: \beta_6 \ne 0$
+
+We found evidence ($p-value = 0.0076$, df = 1) of an association between expected number of violent crimes committed annually and type of university (university versus college), when controlling for region and number of students enrolled.
 
 # Part D: Model proposals
 
@@ -212,5 +215,20 @@ I want you to propose a study to investigate: to what extent does an individual'
 
 ## Response
 
+Response Variable: Developing Alzheimer's (yes/no; categorical binary)
 
+Explanatory Variable: How many people in one's immediate family have been diagnosed with Alzheimer's (discrete numeric variable)
 
+Confounding variable(s): Alcohol consumption is linked to forms of dementia including Alzheimer's. Another couple of confounding variables may be how many elderly people are in one's family or how big one's family is generally. Having more family members may result in more chance of increased number of family members of Alzheimer's while people with smaller families may make it seem like there are less diagnosed members, and ultimately less risk.
+
+Model: Logistic regression model where the outcome is a log likelihood of developing Alzheimer's. We could attempt to control for confounds by having people give an exact count of all their immediate family members and do an offset similar to the enrollment in schools above.
+
+Conditions:   
+(1) Binary response variable.  
+(2) Logistic relationship between Y and X variables.  
+(3) Independent observations.  
+(4) Low multicollinearity.  
+(5) Large enough sample size.  
+(6) No strong outliers.  
+
+We can investigate whether individuals are more likely to develop Alzheimer's depending on the number of immediate family members diagnosed with the disease, while controlling for family size and age. We could conduct a hypothesis test to determine whether the number of diagnosed family members is a statistically significant predictor of developing Alzheimer's. The null hypothesis would be that there is no association between the number of diagnosed family members and the odds of developing Alzheimer's, while the alternative hypothesis would be that there is an association. We can use a likelihood ratio test to determine the p-value.

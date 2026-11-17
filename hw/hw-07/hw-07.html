@@ -2511,7 +2511,7 @@ $ region     &lt;chr&gt; &quot;SE&quot;, &quot;SE&quot;, &quot;W&quot;, &quot;W&
 <p>Write out your fitted model.</p>
 <section id="response-1" class="level3">
 <h3 class="anchored" data-anchor-id="response-1">Response</h3>
-<p><span class="math inline">\(\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = 0.335 + 0.489I(\text{Region}_i = \text{Midwest}) + 0.524I(\text{Region}_i = \text{Northeast}) + 0.871I(\text{Region}_i = \text{Southeast}) + 0.245I(\text{Region}_i = \text{Southwest}) + 0.735I(\text{Region}_i = \text{West}) + 1.241I(\text{Type}_i = \text{University})\)</span></p>
+<p><span class="math inline">\(\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = 0.335 + 0.489 \times I(\text{Region}_i = \text{Midwest}) + 0.524 \times I(\text{Region}_i = \text{Northeast}) + 0.871 \times I(\text{Region}_i = \text{Southeast}) + 0.245 \times I(\text{Region}_i = \text{Southwest}) + 0.735 \times I(\text{Region}_i = \text{West}) + 1.241 \times I(\text{Type}_i = \text{University})\)</span></p>
 </section>
 </section>
 <section id="question-5" class="level2">
@@ -2542,8 +2542,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 </div>
 <p><span class="math inline">\(H_0: \beta_6 = 0\)</span> <span class="math inline">\(H_a: \beta_6 \ne 0\)</span></p>
 <p>Statistical decision: p-value &lt; 0.05, so reject null hypothesis.</p>
-<p>Conclusion in context: We found storng evidence (p-value &lt; 2.2e-16, df = 1) of a association between expected number of violent crimes committed annually and type of institution, university versus college.</p>
-<p>At the significance level of <span class="math inline">\(\alpha = 0.05\)</span>, we reject the null hypothesis with (<span class="math inline">\(p = 2.2 \times 10^{-16} &lt; \alpha\)</span>), that type of institution is log related to annual number of crimes.</p>
+<p>Conclusion in context: We found strong evidence (p-value &lt; 2.2e-16, df = 1) of a association between expected number of violent crimes committed annually and type of institution, university versus college.</p>
+<p>At the significance level of <span class="math inline">\(\alpha = 0.05\)</span>, we found strong evidence (<span class="math inline">\(p = 2.2 \times 10^{-16} &lt; \alpha\)</span>), that type of institution is log related to annual number of crimes when controlling for region.</p>
 </section>
 </section>
 </section>
@@ -2613,7 +2613,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p>Write out your fitted model.</p>
 <section id="response-5" class="level3">
 <h3 class="anchored" data-anchor-id="response-5">Response</h3>
-<p><span class="math inline">\(\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = \log(\text{Enrollment}) -8.509 + 0.099I(\text{Region}_i = \text{Midwest}) + 0.781I(\text{Region}_i = \text{Northeast}) + 0.877I(\text{Region}_i = \text{Southeast}) + 0.503    I(\text{Region}_i = \text{Southwest}) + 0.273I(\text{Region}_i = \text{West}) + 0.340I(\text{Type}_i = \text{University})\)</span></p>
+<p><span class="math inline">\(\log(\widehat{Annual \ Number \ of \ Violent \ Crimes}_i) = \log(\text{Enrollment}) -8.509 + 0.099I \times (\text{Region}_i = \text{Midwest}) + 0.781 \times I(\text{Region}_i = \text{Northeast}) + 0.877 \times I(\text{Region}_i = \text{Southeast}) + 0.503 \times I(\text{Region}_i = \text{Southwest}) + 0.273 \times I(\text{Region}_i = \text{West}) + 0.340 \times I(\text{Type}_i = \text{University})\)</span></p>
 </section>
 </section>
 <section id="question-9" class="level2">
@@ -2624,7 +2624,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>crime_region_adj <span class="ot">&lt;-</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    nv <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(Enrollment)) <span class="sc">+</span> type,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    nv <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(Enrollment)) <span class="sc">+</span> region,</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> crime,</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">&quot;poisson&quot;</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
@@ -2634,14 +2634,16 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <pre><code>Analysis of Deviance Table
 
 Model 1: nv ~ offset(log(Enrollment)) + region + type
-Model 2: nv ~ offset(log(Enrollment)) + type
-  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
-1        74     426.01                          
-2        79     483.71 -5  -57.697 3.632e-11 ***
+Model 2: nv ~ offset(log(Enrollment)) + region
+  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)   
+1        74     426.01                        
+2        75     433.14 -1   -7.134 0.007564 **
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 </div>
+<p><span class="math inline">\(H_0: \beta_6 = 0\)</span> <span class="math inline">\(H_0: \beta_6 \ne 0\)</span></p>
+<p>We found evidence (<span class="math inline">\(p-value = 0.0076\)</span>, df = 1) of an association between expected number of violent crimes committed annually and type of university (university versus college), when controlling for region and number of students enrolled.</p>
 </section>
 </section>
 </section>
@@ -2660,6 +2662,17 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p><em>This question is meant to be preparation for proposing your final project!</em></p>
 <section id="response-7" class="level2">
 <h2 class="anchored" data-anchor-id="response-7">Response</h2>
+<p>Response Variable: Developing Alzheimer’s (yes/no; categorical binary)</p>
+<p>Explanatory Variable: How many people in one’s immediate family have been diagnosed with Alzheimer’s (discrete numeric variable)</p>
+<p>Confounding variable(s): Alcohol consumption is linked to forms of dementia including Alzheimer’s. Another couple of confounding variables may be how many elderly people are in one’s family or how big one’s family is generally. Having more family members may result in more chance of increased number of family members of Alzheimer’s while people with smaller families may make it seem like there are less diagnosed members, and ultimately less risk.</p>
+<p>Model: Logistic regression model where the outcome is a log likelihood of developing Alzheimer’s. We could attempt to control for confounds by having people give an exact count of all their immediate family members and do an offset similar to the enrollment in schools above.</p>
+<p>Conditions:<br>
+(1) Binary response variable.<br>
+(2) Logistic relationship between Y and X variables.<br>
+(3) Independent observations.<br>
+(4) Low multicollinearity.<br>
+(5) Large enough sample size.<br>
+(6) No strong outliers.</p>
 </section>
 </section>
 

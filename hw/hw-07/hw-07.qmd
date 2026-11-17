@@ -3,7 +3,7 @@ title: "Data 308: Homework 7"
 subtitle: "Poisson regression"
 author: "Dylan Wikel"
 format: 
-  html:
+  pdf:
     embed-resources: true
     toc: true
     toc-depth: 4
